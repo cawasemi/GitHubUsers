@@ -13,6 +13,8 @@ class UserDetailViewController: UIViewController {
     @IBOutlet weak var userDetailView: UIView!
     @IBOutlet weak var repositoriesTableView: UITableView!
     
+    var userId: Int64 = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,5 +31,9 @@ class UserDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 }

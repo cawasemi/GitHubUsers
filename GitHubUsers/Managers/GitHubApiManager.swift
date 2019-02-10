@@ -140,7 +140,7 @@ final class GitHubApiManager {
     }
     
     struct AllUsersRequest: GitHubRequest {
-        typealias Response = SearchResponse<Repository>
+        typealias Response = [GitHubUser]
         
         var method: HTTPMethod {
             return .get
@@ -149,10 +149,15 @@ final class GitHubApiManager {
         var path: String {
             return "/users"
         }
+        
+        func response(from object: Any, urlResponse: HTTPURLResponse) throws -> [GitHubUser] {
+            return try decodeArray(object)
+        }
     }
     
     struct SearchUsersRequest: GitHubRequest {
         let query: String
+        let pageNo: Int
         
         // MARK: Request
         typealias Response = SearchResponse<GitHubUser>
@@ -166,7 +171,7 @@ final class GitHubApiManager {
         }
         
         var parameters: Any? {
-            return ["q": query]
+            return ["q": query, "page": pageNo]
         }
     }
 }
@@ -200,6 +205,20 @@ struct GitHubUser: Himotoki.Decodable {
             id: e.value("id"),
             name: e.value("login"),
             iconUrl: e.value("avatar_url"))
+    }
+}
+
+struct GitHubAllUsers: Himotoki.Decodable  {
+    let users: [GitHubUser]
+    
+    static func decode(_ e: Extractor) throws -> GitHubAllUsers {
+        do {
+            let hoge: GitHubUser = try GitHubUser(id: e.value("id"), name: e.value("login"), iconUrl: e.value("avatar_url"))
+            print()
+        } catch let error {
+            dump(error)
+        }
+        return try GitHubAllUsers(users: e.array(.empty))
     }
 }
 
