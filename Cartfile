@@ -1,0 +1,8 @@
+github "Alamofire/Alamofire" "5.0.0.beta.1"
+github "ReactiveX/RxSwift" ~> 4.0
+github "mxcl/PromiseKit" ~> 6.8
+github "ishkawa/APIKit" ~> 3.1
+github "ikesyo/Himotoki" ~> 3.1
+github "realm/realm-cocoa"
+github "kean/Nuke" ~> 7.0
+github "kishikawakatsumi/KeychainAccess"
