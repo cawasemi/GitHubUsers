@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UsersViewController" customModule="GitHubUsers" customModuleProvider="target">
             <connections>
+                <outlet property="blankView" destination="cLa-0e-sBs" id="DoT-Ey-1rF"/>
                 <outlet property="userSearchBar" destination="cxz-eh-Reo" id="VDE-oL-S9C"/>
                 <outlet property="usersTableView" destination="vFt-P0-0hf" id="qX3-JG-XTG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -22,6 +23,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cLa-0e-sBs">
+                    <rect key="frame" x="0.0" y="76" width="375" height="591"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cxz-eh-Reo">
                     <rect key="frame" x="0.0" y="20" width="375" height="56"/>
                     <textInputTraits key="textInputTraits" returnKeyType="search"/>
@@ -38,12 +43,16 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="cxz-eh-Reo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4r0-Wf-Cky"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="cLa-0e-sBs" secondAttribute="bottom" id="7bk-cb-sZI"/>
+                <constraint firstItem="cLa-0e-sBs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FNy-IC-h6b"/>
                 <constraint firstItem="vFt-P0-0hf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="IAd-pt-hqg"/>
                 <constraint firstItem="cxz-eh-Reo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="MNl-0D-b8Z"/>
                 <constraint firstAttribute="bottom" secondItem="vFt-P0-0hf" secondAttribute="bottom" id="T2D-IQ-nKO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vFt-P0-0hf" secondAttribute="trailing" id="a79-Yq-s1n"/>
                 <constraint firstItem="cxz-eh-Reo" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="aUm-4G-ysD"/>
                 <constraint firstItem="vFt-P0-0hf" firstAttribute="top" secondItem="cxz-eh-Reo" secondAttribute="bottom" id="fEX-hg-l79"/>
+                <constraint firstItem="cLa-0e-sBs" firstAttribute="top" secondItem="cxz-eh-Reo" secondAttribute="bottom" id="fmn-wk-W4K"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cLa-0e-sBs" secondAttribute="trailing" id="kqj-2o-z2w"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

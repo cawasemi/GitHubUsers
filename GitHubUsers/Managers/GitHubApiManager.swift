@@ -31,21 +31,16 @@ extension GitHubRequest where Response: Himotoki.Decodable {
     }
 }
 
-
 final class GitHubApiManager {
     static let shared = GitHubApiManager()
     
     private let accessTokenKey: String = "accessToken"
     
     private var keychain: Keychain
+    
     private var _accessToken: String?
-    var hasAccessToken: Bool {
-        if let accessToken = _accessToken {
-            return !accessToken.isEmpty
-        }
-        return false
-    }
 
+    /// アクセストークン
     var accessToken: String {
         set {
             self._accessToken = newValue
@@ -64,6 +59,17 @@ final class GitHubApiManager {
         }
     }
     
+    /// アクセストークンの取得状態
+    var hasAccessToken: Bool {
+        if let accessToken = _accessToken {
+            return !accessToken.isEmpty
+        }
+        return false
+    }
+    
+    /// 現在ログインしているユーザーのログイン名
+    var currentLogin: String? = nil
+
     private init() {
         self.keychain = Keychain(service: "com.cawasemi.GitHubUsers")
         do {
@@ -77,10 +83,13 @@ final class GitHubApiManager {
         do {
             try keychain.remove(accessTokenKey)
             _accessToken = nil
+            currentLogin = nil
         } catch let error {
             dump(error)
         }
     }
+    
+    // Mark: API Request
 
     struct RateLimitRequest: GitHubRequest {
         typealias Response = RateLimit
@@ -94,6 +103,9 @@ final class GitHubApiManager {
         }
     }
     
+    /// アクセストークン取得リクエスト
+    ///
+    /// Web ページを認証で取得したコードをもとにアクセストークンを取得する。
     struct AuthrizedRequest: GitHubRequest {
         typealias Response = GitHubAuthorized
         
@@ -119,28 +131,10 @@ final class GitHubApiManager {
             return ["client_id": "c82b3a07dbc4915a92d1", "client_secret": "c2477409c6951cf55310a096ae2b3dc9bdfd811f", "code": code]
         }
     }
-    
-    struct SearchRepositoriesRequest: GitHubRequest {
-        let query: String
-        
-        // MARK: Request
-        typealias Response = SearchResponse<Repository>
-        
-        var method: HTTPMethod {
-            return .get
-        }
-        
-        var path: String {
-            return "/search/repositories"
-        }
-        
-        var parameters: Any? {
-            return ["q": query]
-        }
-    }
-    
+
+    /// すべてのユーザーを取得する。
     struct AllUsersRequest: GitHubRequest {
-        typealias Response = [GitHubUser]
+        typealias Response = [GitHubSearchUser]
         
         var method: HTTPMethod {
             return .get
@@ -150,17 +144,21 @@ final class GitHubApiManager {
             return "/users"
         }
         
-        func response(from object: Any, urlResponse: HTTPURLResponse) throws -> [GitHubUser] {
+        func response(from object: Any, urlResponse: HTTPURLResponse) throws -> [GitHubSearchUser] {
             return try decodeArray(object)
         }
     }
     
+
+    /// ユーザー検索リクエスト
+    ///
+    /// 指定された条件に一致するユーザーを検索する。
     struct SearchUsersRequest: GitHubRequest {
         let query: String
         let pageNo: Int
         
         // MARK: Request
-        typealias Response = SearchResponse<GitHubUser>
+        typealias Response = SearchResponse<GitHubSearchUser>
         
         var method: HTTPMethod {
             return .get
@@ -172,6 +170,58 @@ final class GitHubApiManager {
         
         var parameters: Any? {
             return ["q": query, "page": pageNo]
+        }
+    }
+    
+    /// 現在ログインしているユーザーの情報を取得する。
+    struct GitHubCurrentUserRequest: GitHubRequest {
+        // MARK: Request
+        typealias Response = GitHubUser
+
+        var method: HTTPMethod {
+            return .get
+        }
+        
+        var path: String {
+            return "/user"
+        }
+    }
+    
+    /// 指定されたユーザーの情報を取得する。
+    struct GitHubUserRequest: GitHubRequest {
+        let login: String
+        
+        // MARK: Request
+        typealias Response = GitHubUser
+        
+        var method: HTTPMethod {
+            return .get
+        }
+        
+        var path: String {
+            let encoded: String = login.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed) ?? ""
+            return String(format: "/users/%@", encoded)
+        }
+    }
+    
+    /// 指定されたユーザーのリポジトリー一覧を取得する。
+    struct GitHubUserRepositoriesRequest: GitHubRequest {
+        let login: String
+        
+        // MARK: Request
+        typealias Response = [GitHubUserRepository]
+        
+        var method: HTTPMethod {
+            return .get
+        }
+        
+        var path: String {
+            let encoded: String = login.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed) ?? ""
+            return String(format: "/users/%@/repos", encoded)
+        }
+
+        func response(from object: Any, urlResponse: HTTPURLResponse) throws -> [GitHubUserRepository] {
+            return try decodeArray(object)
         }
     }
 }
@@ -197,39 +247,54 @@ struct RateLimit: Himotoki.Decodable {
 
 struct GitHubUser: Himotoki.Decodable {
     let id: Int64
-    let name: String
+    let login: String
     let iconUrl: String?
-
+    let name: String?
+    let followers: Int64
+    let following: Int64
+    
     static func decode(_ e: Extractor) throws -> GitHubUser {
         return try GitHubUser(
             id: e.value("id"),
-            name: e.value("login"),
-            iconUrl: e.value("avatar_url"))
+            login: e.value("login"),
+            iconUrl: e.valueOptional("avatar_url"),
+            name: e.valueOptional("name"),
+            followers: e.value("followers"),
+            following: e.value("following"))
     }
 }
 
-struct GitHubAllUsers: Himotoki.Decodable  {
-    let users: [GitHubUser]
-    
-    static func decode(_ e: Extractor) throws -> GitHubAllUsers {
-        do {
-            let hoge: GitHubUser = try GitHubUser(id: e.value("id"), name: e.value("login"), iconUrl: e.value("avatar_url"))
-            print()
-        } catch let error {
-            dump(error)
-        }
-        return try GitHubAllUsers(users: e.array(.empty))
-    }
-}
-
-struct Repository: Himotoki.Decodable {
+struct GitHubUserRepository: Himotoki.Decodable {
     let id: Int64
-    let name: String
-    
-    static func decode(_ e: Extractor) throws -> Repository {
-        return try Repository(
+    let name: String?
+    let htmlUrl: String
+    let description: String?
+    let isFork: Bool
+    let language: String?
+    let stargazers: Int64
+
+    static func decode(_ e: Extractor) throws -> GitHubUserRepository {
+        return try GitHubUserRepository(
             id: e.value("id"),
-            name: e.value("name"))
+            name: e.valueOptional("name"),
+            htmlUrl: e.value("html_url"),
+            description: e.valueOptional("description"),
+            isFork: e.value("fork"),
+            language: e.valueOptional("language"),
+            stargazers: e.value("stargazers_count"))
+    }
+}
+
+struct GitHubSearchUser: Himotoki.Decodable {
+    let id: Int64
+    let login: String
+    let iconUrl: String?
+
+    static func decode(_ e: Extractor) throws -> GitHubSearchUser {
+        return try GitHubSearchUser(
+            id: e.value("id"),
+            login: e.value("login"),
+            iconUrl: e.value("avatar_url"))
     }
 }
 

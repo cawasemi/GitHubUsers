@@ -19,6 +19,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         loginButton.addTarget(self, action: #selector(onLoginButtonTapped(_:)), for: .touchUpInside)
         loginButton.alpha = 0.0
+        
+        URLCache.shared.removeAllCachedResponses()
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import APIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: CommonViewController {
     
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var loginWebView: WKWebView!
@@ -93,14 +93,16 @@ extension LoginViewController: WKNavigationDelegate {
         }
         
         let request = GitHubApiManager.AuthrizedRequest(code: code)
-        APIKit.Session.send(request) { (result) in
+        APIKit.Session.send(request) { [weak self] (result) in
             switch result {
             case .success(let response):
                 GitHubApiManager.shared.accessToken = response.accessToken
+                completion()
             case .failure(let error):
-                dump(error)
+                self?.printError(error)
+                let errorMessage = "認証に失敗しました。\n時間をおいて改めて操作をお願いします。"
+                self?.showErrorMessage(errorMessage, completion: completion)
             }
-            completion()
         }
     }
 }
