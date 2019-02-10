@@ -161,6 +161,7 @@ class UsersViewController: CommonViewController {
     private func updateUsersTableView(_ users: [GitHubSearchUser], nextPageNo: Int) {
         if nextPageNo <= 1 {
             self.users.removeAll()
+            usersTableView.setContentOffset(.zero, animated: false)
         }
         pageNo = nextPageNo
         self.users.append(contentsOf: users)

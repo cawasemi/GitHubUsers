@@ -51,3 +51,17 @@ class CommonViewController: UIViewController {
         }
     }
 }
+
+extension Int64 {
+    var decimalFormat: String {
+        if self < 1000 {
+            return String(format: "%d", self)
+        }
+        let kValue = Double(self) / 1000
+        if kValue < 1000 {
+            return String(format: "%.1lfk", kValue)
+        }
+        let mValue = kValue / 1000
+        return String(format: "%.1lfm", mValue)
+    }
+}

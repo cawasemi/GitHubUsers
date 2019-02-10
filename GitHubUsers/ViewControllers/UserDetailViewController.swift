@@ -8,21 +8,42 @@
 
 import UIKit
 import APIKit
+import Nuke
 
 class UserDetailViewController: CommonViewController {
 
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var userDetailView: UIView!
+    @IBOutlet weak var userIconView: UIImageView!
+    @IBOutlet weak var loginNameLabl: UILabel!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var followerTitleLabel: UILabel!
+    @IBOutlet weak var followerCountLabel: UILabel!
+    @IBOutlet weak var followingTitleLabel: UILabel!
+    @IBOutlet weak var followingCountLabel: UILabel!
+    
     @IBOutlet weak var repositoriesTableView: UITableView!
     
     var userName: String?
     
     private var repositories: [GitHubUserRepository] = []
+    private lazy var countFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        userIconView.image = nil
+        loginNameLabl.text = nil
+        fullNameLabel.text = nil
+        followerTitleLabel.text = "フォロワー："
+        followerCountLabel.text = nil
+        followingTitleLabel.text = "フォロイー："
+        followingCountLabel.text = nil
         loadUser()
     }
 
@@ -40,6 +61,11 @@ class UserDetailViewController: CommonViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Nuke.cancelRequest(for: userIconView)
     }
     
     private func loadUser() {
@@ -75,8 +101,16 @@ class UserDetailViewController: CommonViewController {
     
     private func updateUserData(_ user: GitHubUser) {
         loadingView.stopLoading()
-        print(user)
         loadUserRepositories(user.login)
+
+        if let urlString = user.iconUrl, let iconUrl = URL(string: urlString) {
+            Nuke.loadImage(with: iconUrl, into: userIconView)
+        }
+        loginNameLabl.text = user.login
+        fullNameLabel.text = user.name
+        
+        followerCountLabel.text = user.followers.decimalFormat
+        followingCountLabel.text = user.following.decimalFormat
     }
 
     private func showApiErrorMessage(_ error: SessionTaskError) {

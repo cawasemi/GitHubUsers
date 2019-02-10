@@ -32,6 +32,11 @@ class LoadingView: UIView {
         commonInit()
     }
     
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        commonInit()
+    }
+    
     private func commonInit() {
         guard let targetView = R.nib.loadingView(owner: self, options: nil) else {
             return
