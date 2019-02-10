@@ -27,16 +27,20 @@ class UserDetailViewController: CommonViewController {
     var userName: String?
     
     private var repositories: [GitHubUserRepository] = []
-    private lazy var countFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        return formatter
-    }()
+    
+    private var totalRepositories: Int = 0
+    
+    private var pageNo: Int = 0
+    
+    private var isCallingApi: Bool = false
+    
+    private var cellHeights: [Int64: CGFloat] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        userDetailView.alpha = 0.0
         userIconView.image = nil
         loginNameLabl.text = nil
         fullNameLabel.text = nil
@@ -44,6 +48,11 @@ class UserDetailViewController: CommonViewController {
         followerCountLabel.text = nil
         followingTitleLabel.text = "フォロイー："
         followingCountLabel.text = nil
+
+        repositoriesTableView.register(R.nib.repositoryTableViewCell)
+        repositoriesTableView.dataSource = self
+        repositoriesTableView.delegate = self
+        
         loadUser()
     }
 
@@ -86,22 +95,34 @@ class UserDetailViewController: CommonViewController {
         }
     }
 
-    private func loadUserRepositories(_ login: String) {
-        let request = GitHubApiManager.GitHubUserRepositoriesRequest(login: login)
+    private func loadUserRepositories(nextPageNo: Int) {
+        if isCallingApi {
+            return
+        }
+        
+        guard let login = userName else {
+            return
+        }
+
+        isCallingApi = true
+        let request = GitHubApiManager.GitHubUserRepositoriesRequest(login: login, pageNo: nextPageNo)
         APIKit.Session.send(request) { [weak self] (result) in
             switch result {
             case .success(let response):
                 self?.repositories = response
+                self?.repositoriesTableView.reloadData()
                 break
             case .failure(let error):
                 self?.printError(error)
             }
+            self?.isCallingApi = false
         }
     }
     
     private func updateUserData(_ user: GitHubUser) {
+        userDetailView.alpha = 1.0
         loadingView.stopLoading()
-        loadUserRepositories(user.login)
+        loadUserRepositories(nextPageNo: 1)
 
         if let urlString = user.iconUrl, let iconUrl = URL(string: urlString) {
             Nuke.loadImage(with: iconUrl, into: userIconView)
@@ -112,6 +133,10 @@ class UserDetailViewController: CommonViewController {
         followerCountLabel.text = user.followers.decimalFormat
         followingCountLabel.text = user.following.decimalFormat
     }
+    
+    private func updateUserRepositoriesData(_ repositories: [GitHubUserRepository]) {
+        
+    }
 
     private func showApiErrorMessage(_ error: SessionTaskError) {
         printError(error)
@@ -119,5 +144,48 @@ class UserDetailViewController: CommonViewController {
         showErrorMessage(errorMessage) { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
+    }
+}
+
+
+extension UserDetailViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return repositories.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.repositoryTableViewCell, for: indexPath)!
+        let repo = repositories[indexPath.row]
+        cell.prepareRepositoryData(repo)
+        return cell
+    }
+}
+
+extension UserDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if 0 < self.repositories.count
+            && self.repositories.count < totalRepositories
+            && self.repositories.count - indexPath.row <= 5 {
+            // 表示されていないデータが一定数以下になったら、次のページを読みに行く。
+            loadUserRepositories(nextPageNo: pageNo + 1)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let repo = repositories[indexPath.row]
+        if let height = cellHeights[repo.id] {
+            return height
+        }
+        let height = RepositoryTableViewCell.cellHeight(repo, baseWidth: tableView.frame.width)
+        cellHeights[repo.id] = height
+        return height
     }
 }

@@ -94,8 +94,10 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 1 reuse identifiers.
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 2 reuse identifiers.
   struct reuseIdentifier {
+    /// Reuse identifier `repositoryTableViewCell`.
+    static let repositoryTableViewCell: Rswift.ReuseIdentifier<RepositoryTableViewCell> = Rswift.ReuseIdentifier(identifier: "repositoryTableViewCell")
     /// Reuse identifier `userTableViewCell`.
     static let userTableViewCell: Rswift.ReuseIdentifier<UserTableViewCell> = Rswift.ReuseIdentifier(identifier: "userTableViewCell")
     
@@ -163,8 +165,11 @@ struct _R: Rswift.Validatable {
       fileprivate init() {}
     }
     
-    struct _RepositoryTableViewCell: Rswift.NibResourceType {
+    struct _RepositoryTableViewCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
+      typealias ReusableType = RepositoryTableViewCell
+      
       let bundle = R.hostingBundle
+      let identifier = "repositoryTableViewCell"
       let name = "RepositoryTableViewCell"
       
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> RepositoryTableViewCell? {

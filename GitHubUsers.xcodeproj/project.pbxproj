@@ -219,12 +219,12 @@
 		739EB0F9220D7ED30068C145 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				735CDAFE220FF72B00CA3A6E /* LoadingView.swift */,
+				735CDB00220FF75600CA3A6E /* LoadingView.xib */,
 				735CDAF6220FD9EB00CA3A6E /* RepositoryTableViewCell.swift */,
 				735CDAF7220FD9EB00CA3A6E /* RepositoryTableViewCell.xib */,
 				735CDAEE220FD0D000CA3A6E /* UserTableViewCell.swift */,
 				735CDAEF220FD0D000CA3A6E /* UserTableViewCell.xib */,
-				735CDAFE220FF72B00CA3A6E /* LoadingView.swift */,
-				735CDB00220FF75600CA3A6E /* LoadingView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";

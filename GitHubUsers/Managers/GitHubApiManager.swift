@@ -190,7 +190,7 @@ final class GitHubApiManager {
     /// 指定されたユーザーの情報を取得する。
     struct GitHubUserRequest: GitHubRequest {
         let login: String
-        
+
         // MARK: Request
         typealias Response = GitHubUser
         
@@ -207,7 +207,8 @@ final class GitHubApiManager {
     /// 指定されたユーザーのリポジトリー一覧を取得する。
     struct GitHubUserRepositoriesRequest: GitHubRequest {
         let login: String
-        
+        let pageNo: Int
+
         // MARK: Request
         typealias Response = [GitHubUserRepository]
         
@@ -218,6 +219,10 @@ final class GitHubApiManager {
         var path: String {
             let encoded: String = login.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed) ?? ""
             return String(format: "/users/%@/repos", encoded)
+        }
+        
+        var parameters: Any? {
+            return ["page": pageNo]
         }
 
         func response(from object: Any, urlResponse: HTTPURLResponse) throws -> [GitHubUserRepository] {
