@@ -39,15 +39,20 @@ class RepositoryTableViewCell: UITableViewCell {
         return UIFont.systemFont(ofSize: 13.0, weight: .regular)
     }
     
+    /// 表示する内容により可変になるので、セルの高さを求める。
     class func cellHeight(_ value: GitHubUserRepository, baseWidth: CGFloat) -> CGFloat {
         let maxWidth = baseWidth - 16.0 * 2
         var height: CGFloat = 0
         height += 12.0
-        height += nameFont.capHeight
+        height += nameFont.lineHeight
         height += 8.0
-        height += languageFont.capHeight
+        height += languageFont.lineHeight
         height += 8.0
-        height += descriptionFont.capHeight * 3
+        if let description = value.description {
+            height += description.requiredSize(maxWidth: maxWidth, font: descriptionFont).height
+        } else {
+            height += descriptionFont.lineHeight
+        }
         height += 12.0
         return height
     }

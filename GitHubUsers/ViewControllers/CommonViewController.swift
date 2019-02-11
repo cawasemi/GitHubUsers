@@ -53,6 +53,11 @@ class CommonViewController: UIViewController {
 }
 
 extension Int64 {
+    /// 対象の数値を整形する。
+    ///
+    /// 対象の数値が 1,000 未満であればそのまま。
+    /// 対象の数値が 1,000 以上であれば 12.3k のように変換。
+    /// 対象の数値が 1,000,000 以上であれば　45.6m のように変換。
     var decimalFormat: String {
         if self < 1000 {
             return String(format: "%d", self)
@@ -63,5 +68,26 @@ extension Int64 {
         }
         let mValue = kValue / 1000
         return String(format: "%.1lfm", mValue)
+    }
+}
+
+extension String {
+    /// 対象の文字列を表示するのに必要なサイズを取得する。
+    func requiredSize(maxWidth: CGFloat, font: UIFont) -> CGSize {
+        let attributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: font]
+        let target = NSAttributedString(string: self, attributes: attributes)
+        let rect = target.boundingRect(with: CGSize(width: maxWidth, height: 1024), options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
+        return CGSize(width: ceil(rect.width), height: ceil(rect.height))
+    }
+}
+
+extension Array {
+    /// 指定されたインデックスが対象の配列の範囲内であるか確認し、範囲外であれば nil を返す。
+    func tryGet(_ index: Int) -> Element? {
+        if 0 <= index && index < self.count {
+            return self[index]
+        } else {
+            return nil
+        }
     }
 }

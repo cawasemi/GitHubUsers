@@ -48,20 +48,24 @@ class LoadingView: UIView {
         addSubview(targetView)
     }
     
+    /// 読み込み中部品を表示する。
     func startLoading(_ message: String? = nil) {
         if let parentView = superview {
             parentView.bringSubviewToFront(self)
         }
 
+        self.alpha = 1.0
         messageLabel.text = message
         messageLabel.isHidden = (message == nil)
         activityIndicatorView.startAnimating()
     }
     
+    /// 読み込み中部品を非表示にする。
     func stopLoading() {
         if let parentView = superview {
             parentView.sendSubviewToBack(self)
         }
+        self.alpha = 0.0
         activityIndicatorView.stopAnimating()
     }
 }

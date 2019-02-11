@@ -48,7 +48,7 @@ class UsersViewController: CommonViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        // 画面がh表示された時に選択されているセルを解除する。
+        // 画面が表示された時に選択されているセルを解除する。
         if let selectedRows = usersTableView.indexPathsForSelectedRows {
             selectedRows.forEach { (indexPath) in
                 usersTableView.deselectRow(at: indexPath, animated: true)
@@ -186,15 +186,19 @@ extension UsersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let userCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.userTableViewCell, for: indexPath)!
-        let user = users[indexPath.row]
-        userCell.prepareUserData(iconUrl: user.iconUrl, userName: user.login)
+        if let user = users.tryGet(indexPath.row) {
+            userCell.prepareUserData(iconUrl: user.iconUrl, userName: user.login)
+        }
         return userCell
     }
 }
 
 extension UsersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = users[indexPath.row]
+        guard let user = users.tryGet(indexPath.row) else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
         let detailVC = UserDetailViewController()
         detailVC.userName = user.login
         navigationController?.pushViewController(detailVC, animated: true)

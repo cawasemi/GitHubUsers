@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 import APIKit
 import Nuke
 
@@ -75,6 +76,13 @@ class UserDetailViewController: CommonViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Nuke.cancelRequest(for: userIconView)
+        
+        // 画面が表示された時に選択されているセルを解除する。
+        if let selectedRows = repositoriesTableView.indexPathsForSelectedRows {
+            selectedRows.forEach { (indexPath) in
+                repositoriesTableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
     }
     
     private func loadUser() {
@@ -109,7 +117,7 @@ class UserDetailViewController: CommonViewController {
         APIKit.Session.send(request) { [weak self] (result) in
             switch result {
             case .success(let response):
-                self?.repositories = response
+                self?.repositories = response.filter({!$0.isFork}).map({$0})
                 self?.repositoriesTableView.reloadData()
                 break
             case .failure(let error):
@@ -133,10 +141,6 @@ class UserDetailViewController: CommonViewController {
         followerCountLabel.text = user.followers.decimalFormat
         followingCountLabel.text = user.following.decimalFormat
     }
-    
-    private func updateUserRepositoriesData(_ repositories: [GitHubUserRepository]) {
-        
-    }
 
     private func showApiErrorMessage(_ error: SessionTaskError) {
         printError(error)
@@ -146,7 +150,6 @@ class UserDetailViewController: CommonViewController {
         }
     }
 }
-
 
 extension UserDetailViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -159,24 +162,24 @@ extension UserDetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.repositoryTableViewCell, for: indexPath)!
-        let repo = repositories[indexPath.row]
-        cell.prepareRepositoryData(repo)
+        if let repo = repositories.tryGet(indexPath.row) {
+            cell.prepareRepositoryData(repo)
+        }
         return cell
     }
 }
 
 extension UserDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        guard let repo = repositories.tryGet(indexPath.row), let targetUrl = URL(string: repo.htmlUrl) else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        let safari = SFSafariViewController(url: targetUrl)
+        present(safari, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if 0 < self.repositories.count
-            && self.repositories.count < totalRepositories
-            && self.repositories.count - indexPath.row <= 5 {
-            // 表示されていないデータが一定数以下になったら、次のページを読みに行く。
-            loadUserRepositories(nextPageNo: pageNo + 1)
-        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
