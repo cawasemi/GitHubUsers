@@ -23,7 +23,9 @@ class UserDetailViewController: CommonViewController {
     @IBOutlet weak var followingTitleLabel: UILabel!
     @IBOutlet weak var followingCountLabel: UILabel!
     
+    @IBOutlet weak var repositoriesTitleLabel: UILabel!
     @IBOutlet weak var repositoriesTableView: UITableView!
+    @IBOutlet weak var emptyMessageView: EmptyMessageView!
     
     var userName: String?
     
@@ -50,9 +52,13 @@ class UserDetailViewController: CommonViewController {
         followingTitleLabel.text = "フォロイー："
         followingCountLabel.text = nil
 
+        repositoriesTitleLabel.text = "リポジトリー一覧"
         repositoriesTableView.register(R.nib.repositoryTableViewCell)
         repositoriesTableView.dataSource = self
         repositoriesTableView.delegate = self
+        
+        // 
+        emptyMessageView.hideMessage()
         
         loadUser()
     }
@@ -117,8 +123,7 @@ class UserDetailViewController: CommonViewController {
         APIKit.Session.send(request) { [weak self] (result) in
             switch result {
             case .success(let response):
-                self?.repositories = response.filter({!$0.isFork}).map({$0})
-                self?.repositoriesTableView.reloadData()
+                self?.updateUserRepositories(response)
                 break
             case .failure(let error):
                 self?.printError(error)
@@ -140,6 +145,15 @@ class UserDetailViewController: CommonViewController {
         
         followerCountLabel.text = user.followers.decimalFormat
         followingCountLabel.text = user.following.decimalFormat
+    }
+    
+    private func updateUserRepositories(_ repositories: [GitHubUserRepository]) {
+        self.repositories = repositories.filter({!$0.isFork}).map({$0})
+        self.repositoriesTableView.reloadData()
+        if self.repositories.count == 0 {
+            let emptyMessage = "このユーザーはリポジトリーをまだ作成していません。"
+            emptyMessageView.showMessage(emptyMessage)
+        }
     }
 
     private func showApiErrorMessage(_ error: SessionTaskError) {

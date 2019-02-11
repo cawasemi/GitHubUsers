@@ -16,8 +16,10 @@ struct R: Rswift.Validatable {
     try intern.validate()
   }
   
-  /// This `R.nib` struct is generated, and contains static references to 6 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 7 nibs.
   struct nib {
+    /// Nib `EmptyMessageView`.
+    static let emptyMessageView = _R.nib._EmptyMessageView()
     /// Nib `LoadingView`.
     static let loadingView = _R.nib._LoadingView()
     /// Nib `LoginViewController`.
@@ -30,6 +32,12 @@ struct R: Rswift.Validatable {
     static let userTableViewCell = _R.nib._UserTableViewCell()
     /// Nib `UsersViewController`.
     static let usersViewController = _R.nib._UsersViewController()
+    
+    /// `UINib(name: "EmptyMessageView", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.emptyMessageView) instead")
+    static func emptyMessageView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.emptyMessageView)
+    }
     
     /// `UINib(name: "LoadingView", in: bundle)`
     @available(*, deprecated, message: "Use UINib(resource: R.nib.loadingView) instead")
@@ -65,6 +73,10 @@ struct R: Rswift.Validatable {
     @available(*, deprecated, message: "Use UINib(resource: R.nib.usersViewController) instead")
     static func usersViewController(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.usersViewController)
+    }
+    
+    static func emptyMessageView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
+      return R.nib.emptyMessageView.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
     }
     
     static func loadingView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
@@ -143,6 +155,17 @@ struct _R: Rswift.Validatable {
   }
   
   struct nib {
+    struct _EmptyMessageView: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "EmptyMessageView"
+      
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
+      }
+      
+      fileprivate init() {}
+    }
+    
     struct _LoadingView: Rswift.NibResourceType {
       let bundle = R.hostingBundle
       let name = "LoadingView"

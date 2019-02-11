@@ -11,6 +11,7 @@ import APIKit
 
 class UsersViewController: CommonViewController {
 
+    @IBOutlet weak var emptyMessageView: EmptyMessageView!
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var userSearchBar: UISearchBar!
     @IBOutlet weak var blankView: UIView!
@@ -125,6 +126,7 @@ class UsersViewController: CommonViewController {
             return
         }
         isCallingApi = true
+        emptyMessageView.hideMessage()
         guard let keyword = userSearchBar.text, !keyword.isEmpty else {
             // キーワードが入力されていない場合は、すべてのユーザーを検索する。
             loadAllUsers()
@@ -166,6 +168,10 @@ class UsersViewController: CommonViewController {
         pageNo = nextPageNo
         self.users.append(contentsOf: users)
         usersTableView.reloadData()
+        if self.users.count == 0 {
+            let emptyMessage = "指定された条件ではユーザーを見つけることはできませんでした。"
+            emptyMessageView.showMessage(emptyMessage)
+        }
     }
     
     private func showApiErrorMessage(_ error: SessionTaskError) {

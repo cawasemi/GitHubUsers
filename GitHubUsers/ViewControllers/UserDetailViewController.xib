@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserDetailViewController" customModule="GitHubUsers" customModuleProvider="target">
             <connections>
+                <outlet property="emptyMessageView" destination="Stl-Pt-jsq" id="bqg-ex-WvY"/>
                 <outlet property="followerCountLabel" destination="ie2-Ek-IUz" id="BAx-oB-BzQ"/>
                 <outlet property="followerTitleLabel" destination="At3-dd-bzY" id="wLw-br-AnL"/>
                 <outlet property="followingCountLabel" destination="mZl-7c-bhZ" id="jzK-Fd-h0E"/>
@@ -20,6 +21,7 @@
                 <outlet property="loadingView" destination="EcZ-V5-r5D" id="kQN-Gm-XQe"/>
                 <outlet property="loginNameLabl" destination="5qq-cL-BwJ" id="kU4-J2-rIm"/>
                 <outlet property="repositoriesTableView" destination="4Gg-wE-f66" id="RdL-KE-zIv"/>
+                <outlet property="repositoriesTitleLabel" destination="d2R-OB-nq4" id="poI-rM-IGq"/>
                 <outlet property="userDetailView" destination="E7v-SB-oK0" id="SJM-ne-ogu"/>
                 <outlet property="userIconView" destination="miJ-fZ-PAz" id="EmF-PY-ne4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -115,24 +117,53 @@
                         <constraint firstItem="miJ-fZ-PAz" firstAttribute="top" secondItem="E7v-SB-oK0" secondAttribute="top" constant="12" id="lPO-jV-mAo"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cca-Sm-OtK" userLabel="Repositories Title Base View">
+                    <rect key="frame" x="0.0" y="138" width="375" height="28.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2R-OB-nq4">
+                            <rect key="frame" x="8" y="4" width="359" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.796590742370892" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="d2R-OB-nq4" secondAttribute="trailing" constant="8" id="AJV-n8-baR"/>
+                        <constraint firstItem="d2R-OB-nq4" firstAttribute="top" secondItem="cca-Sm-OtK" secondAttribute="top" constant="4" id="GcR-UN-ttl"/>
+                        <constraint firstItem="d2R-OB-nq4" firstAttribute="leading" secondItem="cca-Sm-OtK" secondAttribute="leading" constant="8" id="oMz-QN-Ddo"/>
+                        <constraint firstAttribute="bottom" secondItem="d2R-OB-nq4" secondAttribute="bottom" constant="4" id="tkb-BO-ibK"/>
+                    </constraints>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Gg-wE-f66">
-                    <rect key="frame" x="0.0" y="138" width="375" height="529"/>
+                    <rect key="frame" x="0.0" y="166.5" width="375" height="500.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Stl-Pt-jsq" customClass="EmptyMessageView" customModule="GitHubUsers" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="166.5" width="375" height="500.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="EcZ-V5-r5D" secondAttribute="bottom" id="2dn-f4-7PE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="EcZ-V5-r5D" secondAttribute="trailing" id="52L-1e-Ghr"/>
+                <constraint firstItem="Stl-Pt-jsq" firstAttribute="bottom" secondItem="4Gg-wE-f66" secondAttribute="bottom" id="J4w-zJ-3Dx"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4Gg-wE-f66" secondAttribute="trailing" id="Lcq-VU-DI0"/>
-                <constraint firstItem="4Gg-wE-f66" firstAttribute="top" secondItem="E7v-SB-oK0" secondAttribute="bottom" id="X2l-UN-NQb"/>
+                <constraint firstItem="Stl-Pt-jsq" firstAttribute="top" secondItem="4Gg-wE-f66" secondAttribute="top" id="PaC-ET-FzJ"/>
+                <constraint firstItem="cca-Sm-OtK" firstAttribute="top" secondItem="E7v-SB-oK0" secondAttribute="bottom" id="X2l-UN-NQb"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cca-Sm-OtK" secondAttribute="trailing" id="Y0q-yQ-WV7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="E7v-SB-oK0" secondAttribute="trailing" id="cLV-p0-TWO"/>
                 <constraint firstItem="E7v-SB-oK0" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="e55-gY-rdL"/>
+                <constraint firstItem="4Gg-wE-f66" firstAttribute="top" secondItem="cca-Sm-OtK" secondAttribute="bottom" id="f9s-cT-YM2"/>
                 <constraint firstItem="EcZ-V5-r5D" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fP5-pm-kL9"/>
                 <constraint firstAttribute="bottom" secondItem="4Gg-wE-f66" secondAttribute="bottom" id="fhb-EG-yDn"/>
+                <constraint firstItem="Stl-Pt-jsq" firstAttribute="leading" secondItem="4Gg-wE-f66" secondAttribute="leading" id="goj-ug-JO1"/>
                 <constraint firstItem="4Gg-wE-f66" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="i1u-Dp-L2O"/>
+                <constraint firstItem="cca-Sm-OtK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qaP-V4-ytz"/>
                 <constraint firstItem="E7v-SB-oK0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="s5G-t3-thV"/>
                 <constraint firstItem="EcZ-V5-r5D" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="vw9-bU-MyX"/>
+                <constraint firstItem="Stl-Pt-jsq" firstAttribute="trailing" secondItem="4Gg-wE-f66" secondAttribute="trailing" id="wHT-1Q-tgG"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
