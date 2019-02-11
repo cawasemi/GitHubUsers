@@ -106,9 +106,9 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="1LA-tW-hzt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2X0-1E-5PD" secondAttribute="bottom" priority="750" constant="8" id="1Eb-bF-nK1"/>
+                        <constraint firstItem="1LA-tW-hzt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2X0-1E-5PD" secondAttribute="bottom" constant="8" id="1Eb-bF-nK1"/>
                         <constraint firstItem="1LA-tW-hzt" firstAttribute="leading" secondItem="2X0-1E-5PD" secondAttribute="leading" id="91b-S2-Kx4"/>
-                        <constraint firstItem="1LA-tW-hzt" firstAttribute="top" secondItem="miJ-fZ-PAz" secondAttribute="bottom" constant="8" id="Bs8-zc-jEI"/>
+                        <constraint firstItem="1LA-tW-hzt" firstAttribute="top" secondItem="miJ-fZ-PAz" secondAttribute="bottom" priority="250" constant="8" id="Bs8-zc-jEI"/>
                         <constraint firstItem="2X0-1E-5PD" firstAttribute="top" secondItem="miJ-fZ-PAz" secondAttribute="top" id="OCe-TT-rJx"/>
                         <constraint firstItem="1LA-tW-hzt" firstAttribute="trailing" secondItem="2X0-1E-5PD" secondAttribute="trailing" id="T54-yM-ta8"/>
                         <constraint firstItem="miJ-fZ-PAz" firstAttribute="leading" secondItem="E7v-SB-oK0" secondAttribute="leading" constant="16" id="YBa-bK-yNo"/>
