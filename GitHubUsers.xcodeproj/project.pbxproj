@@ -23,6 +23,7 @@
 		735CDB092211021600CA3A6E /* TableViewLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735CDB082211021600CA3A6E /* TableViewLoadingView.swift */; };
 		735CDB0D221109B500CA3A6E /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735CDB0C221109B500CA3A6E /* EmptyMessageView.swift */; };
 		735CDB0F221109C800CA3A6E /* EmptyMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 735CDB0E221109C800CA3A6E /* EmptyMessageView.xib */; };
+		735CDB112211750200CA3A6E /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 735CDB102211750200CA3A6E /* Image.xcassets */; };
 		7381B965220C70AD00BE7FF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7381B964220C70AD00BE7FF0 /* AppDelegate.swift */; };
 		7381B967220C70AD00BE7FF0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7381B966220C70AD00BE7FF0 /* ViewController.swift */; };
 		7381B96A220C70AD00BE7FF0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7381B968220C70AD00BE7FF0 /* Main.storyboard */; };
@@ -78,6 +79,7 @@
 		735CDB082211021600CA3A6E /* TableViewLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewLoadingView.swift; sourceTree = "<group>"; };
 		735CDB0C221109B500CA3A6E /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
 		735CDB0E221109C800CA3A6E /* EmptyMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMessageView.xib; sourceTree = "<group>"; };
+		735CDB102211750200CA3A6E /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		7381B961220C70AD00BE7FF0 /* GitHubUsers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubUsers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7381B964220C70AD00BE7FF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7381B966220C70AD00BE7FF0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				739EB0FD220D80690068C145 /* R.generated.swift */,
+				735CDB102211750200CA3A6E /* Image.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				735CDAF5220FD8EE00CA3A6E /* UserDetailViewController.xib in Resources */,
 				735CDB01220FF75600CA3A6E /* LoadingView.xib in Resources */,
 				7381B96A220C70AD00BE7FF0 /* Main.storyboard in Resources */,
+				735CDB112211750200CA3A6E /* Image.xcassets in Resources */,
 				735CDB0F221109C800CA3A6E /* EmptyMessageView.xib in Resources */,
 				735CDAF9220FD9EB00CA3A6E /* RepositoryTableViewCell.xib in Resources */,
 			);
