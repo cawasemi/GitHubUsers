@@ -43,8 +43,10 @@ class UsersViewController: CommonViewController {
     /// ユーザー情報を更新することを表す。
     private var willRefreshUserData: Bool = false
     
-    /// 検索バーをアクティブにした時に設定されていたキーワードを保持する。
-    private var prevKeyword: String? = nil
+    /// 検索キーワード
+    ///
+    /// 検索バーでキャンセルされた時に表示を戻すため。
+    private var searchKeyword: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -307,18 +309,18 @@ extension UsersViewController: UITableViewDelegate {
 
 extension UsersViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        prevKeyword = searchBar.text
         showBlankView()
         return true
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         hideBlankView()
-        searchBar.text = prevKeyword
+        searchBar.text = searchKeyword
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hideBlankView()
+        searchKeyword = searchBar.text
         loadUsers(nextPageNo: 1)
     }
 }
