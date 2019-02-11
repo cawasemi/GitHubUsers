@@ -148,6 +148,8 @@ class UsersViewController: CommonViewController {
         blankView.alpha = 0.0
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.blankView.alpha = 1.0
+            self?.userSearchBar.showsCancelButton = true
+            self?.view.layoutIfNeeded()
         }
     }
     
@@ -160,6 +162,8 @@ class UsersViewController: CommonViewController {
         
         UIView.animate(withDuration: 0.3, animations: { [weak self] in
             self?.blankView.alpha = 0.0
+            self?.userSearchBar.showsCancelButton = false
+            self?.view.layoutIfNeeded()
         }) { [weak self] (finished) in
             guard let parentView = self?.view, let targetView = self?.blankView else {
                 return
@@ -313,19 +317,16 @@ extension UsersViewController: UITableViewDelegate {
 extension UsersViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         showBlankView()
-        searchBar.showsCancelButton = true
         return true
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         hideBlankView()
-        searchBar.showsCancelButton = false
         searchBar.text = searchKeyword
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hideBlankView()
-        searchBar.showsCancelButton = false
         searchKeyword = searchBar.text
         loadUsers(nextPageNo: 1)
     }
