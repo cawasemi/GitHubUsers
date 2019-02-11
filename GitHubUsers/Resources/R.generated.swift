@@ -16,7 +16,20 @@ struct R: Rswift.Validatable {
     try intern.validate()
   }
   
-  /// This `R.nib` struct is generated, and contains static references to 7 nibs.
+  /// This `R.image` struct is generated, and contains static references to 1 images.
+  struct image {
+    /// Image `menu`.
+    static let menu = Rswift.ImageResource(bundle: R.hostingBundle, name: "menu")
+    
+    /// `UIImage(named: "menu", bundle: ..., traitCollection: ...)`
+    static func menu(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.menu, compatibleWith: traitCollection)
+    }
+    
+    fileprivate init() {}
+  }
+  
+  /// This `R.nib` struct is generated, and contains static references to 8 nibs.
   struct nib {
     /// Nib `EmptyMessageView`.
     static let emptyMessageView = _R.nib._EmptyMessageView()
@@ -24,6 +37,8 @@ struct R: Rswift.Validatable {
     static let loadingView = _R.nib._LoadingView()
     /// Nib `LoginViewController`.
     static let loginViewController = _R.nib._LoginViewController()
+    /// Nib `MenuView`.
+    static let menuView = _R.nib._MenuView()
     /// Nib `RepositoryTableViewCell`.
     static let repositoryTableViewCell = _R.nib._RepositoryTableViewCell()
     /// Nib `UserDetailViewController`.
@@ -49,6 +64,12 @@ struct R: Rswift.Validatable {
     @available(*, deprecated, message: "Use UINib(resource: R.nib.loginViewController) instead")
     static func loginViewController(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.loginViewController)
+    }
+    
+    /// `UINib(name: "MenuView", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.menuView) instead")
+    static func menuView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.menuView)
     }
     
     /// `UINib(name: "RepositoryTableViewCell", in: bundle)`
@@ -85,6 +106,10 @@ struct R: Rswift.Validatable {
     
     static func loginViewController(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
       return R.nib.loginViewController.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
+    }
+    
+    static func menuView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
+      return R.nib.menuView.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
     }
     
     static func repositoryTableViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> RepositoryTableViewCell? {
@@ -152,9 +177,14 @@ struct R: Rswift.Validatable {
 struct _R: Rswift.Validatable {
   static func validate() throws {
     try storyboard.validate()
+    try nib.validate()
   }
   
-  struct nib {
+  struct nib: Rswift.Validatable {
+    static func validate() throws {
+      try _UsersViewController.validate()
+    }
+    
     struct _EmptyMessageView: Rswift.NibResourceType {
       let bundle = R.hostingBundle
       let name = "EmptyMessageView"
@@ -180,6 +210,17 @@ struct _R: Rswift.Validatable {
     struct _LoginViewController: Rswift.NibResourceType {
       let bundle = R.hostingBundle
       let name = "LoginViewController"
+      
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
+      }
+      
+      fileprivate init() {}
+    }
+    
+    struct _MenuView: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "MenuView"
       
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
@@ -227,12 +268,18 @@ struct _R: Rswift.Validatable {
       fileprivate init() {}
     }
     
-    struct _UsersViewController: Rswift.NibResourceType {
+    struct _UsersViewController: Rswift.NibResourceType, Rswift.Validatable {
       let bundle = R.hostingBundle
       let name = "UsersViewController"
       
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
+      }
+      
+      static func validate() throws {
+        if UIKit.UIImage(named: "menu", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'menu' is used in nib 'UsersViewController', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}

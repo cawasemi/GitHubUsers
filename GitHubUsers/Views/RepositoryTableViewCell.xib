@@ -24,11 +24,11 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nhP-If-rUI">
+                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nhP-If-rUI">
                         <rect key="frame" x="16" y="40.5" width="288" height="20.5"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="5bR-17-F3j">
-                                <rect key="frame" x="0.0" y="0.0" width="218.5" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="122" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwe-Ws-Pae">
                                         <rect key="frame" x="0.0" y="0.0" width="76" height="20.5"/>
@@ -37,7 +37,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AP5-2Y-ONB">
-                                        <rect key="frame" x="80" y="0.0" width="138.5" height="20.5"/>
+                                        <rect key="frame" x="80" y="0.0" width="42" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -62,11 +62,19 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                    </stackView>
+                        <constraints>
+                            <constraint firstItem="5bR-17-F3j" firstAttribute="top" secondItem="nhP-If-rUI" secondAttribute="top" id="0tg-TS-Oiv"/>
+                            <constraint firstAttribute="bottom" secondItem="5bR-17-F3j" secondAttribute="bottom" id="jEK-56-TUH"/>
+                            <constraint firstAttribute="trailing" secondItem="MIG-3r-trb" secondAttribute="trailing" id="kSV-dm-UPz"/>
+                            <constraint firstItem="5bR-17-F3j" firstAttribute="leading" secondItem="nhP-If-rUI" secondAttribute="leading" id="oC9-iI-mMd"/>
+                            <constraint firstAttribute="bottom" secondItem="MIG-3r-trb" secondAttribute="bottom" id="xD0-Rp-6Q5"/>
+                            <constraint firstItem="MIG-3r-trb" firstAttribute="top" secondItem="nhP-If-rUI" secondAttribute="top" id="yug-LG-XFb"/>
+                        </constraints>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNb-c6-zQk">
                         <rect key="frame" x="16" y="69" width="288" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.17999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>

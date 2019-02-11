@@ -23,6 +23,11 @@
 		735CDB092211021600CA3A6E /* TableViewLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735CDB082211021600CA3A6E /* TableViewLoadingView.swift */; };
 		735CDB0D221109B500CA3A6E /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735CDB0C221109B500CA3A6E /* EmptyMessageView.swift */; };
 		735CDB0F221109C800CA3A6E /* EmptyMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 735CDB0E221109C800CA3A6E /* EmptyMessageView.xib */; };
+		735CDB112211750200CA3A6E /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 735CDB102211750200CA3A6E /* Image.xcassets */; };
+		735CDB132211ACC600CA3A6E /* GitHubApiSearchUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735CDB122211ACC600CA3A6E /* GitHubApiSearchUsers.swift */; };
+		735CDB152211AD4600CA3A6E /* GitHubApiUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735CDB142211AD4600CA3A6E /* GitHubApiUser.swift */; };
+		735CDB1C2211C01C00CA3A6E /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 735CDB1A2211C01C00CA3A6E /* MenuView.xib */; };
+		735CDB1D2211C01C00CA3A6E /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735CDB1B2211C01C00CA3A6E /* MenuView.swift */; };
 		7381B965220C70AD00BE7FF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7381B964220C70AD00BE7FF0 /* AppDelegate.swift */; };
 		7381B967220C70AD00BE7FF0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7381B966220C70AD00BE7FF0 /* ViewController.swift */; };
 		7381B96A220C70AD00BE7FF0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7381B968220C70AD00BE7FF0 /* Main.storyboard */; };
@@ -78,6 +83,11 @@
 		735CDB082211021600CA3A6E /* TableViewLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewLoadingView.swift; sourceTree = "<group>"; };
 		735CDB0C221109B500CA3A6E /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
 		735CDB0E221109C800CA3A6E /* EmptyMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMessageView.xib; sourceTree = "<group>"; };
+		735CDB102211750200CA3A6E /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
+		735CDB122211ACC600CA3A6E /* GitHubApiSearchUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubApiSearchUsers.swift; sourceTree = "<group>"; };
+		735CDB142211AD4600CA3A6E /* GitHubApiUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubApiUser.swift; sourceTree = "<group>"; };
+		735CDB1A2211C01C00CA3A6E /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
+		735CDB1B2211C01C00CA3A6E /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		7381B961220C70AD00BE7FF0 /* GitHubUsers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubUsers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7381B964220C70AD00BE7FF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7381B966220C70AD00BE7FF0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +223,8 @@
 				735CDB0E221109C800CA3A6E /* EmptyMessageView.xib */,
 				735CDAFE220FF72B00CA3A6E /* LoadingView.swift */,
 				735CDB00220FF75600CA3A6E /* LoadingView.xib */,
+				735CDB1B2211C01C00CA3A6E /* MenuView.swift */,
+				735CDB1A2211C01C00CA3A6E /* MenuView.xib */,
 				735CDAF6220FD9EB00CA3A6E /* RepositoryTableViewCell.swift */,
 				735CDAF7220FD9EB00CA3A6E /* RepositoryTableViewCell.xib */,
 				735CDB082211021600CA3A6E /* TableViewLoadingView.swift */,
@@ -240,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				739EB0FD220D80690068C145 /* R.generated.swift */,
+				735CDB102211750200CA3A6E /* Image.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -248,6 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				739EB125220ECA2B0068C145 /* GitHubApiManager.swift */,
+				735CDB122211ACC600CA3A6E /* GitHubApiSearchUsers.swift */,
+				735CDB142211AD4600CA3A6E /* GitHubApiUser.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -400,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				735CDAED220FCE2F00CA3A6E /* LoginViewController.xib in Resources */,
+				735CDB1C2211C01C00CA3A6E /* MenuView.xib in Resources */,
 				7381B96F220C70AE00BE7FF0 /* LaunchScreen.storyboard in Resources */,
 				735CDAE9220FCE0700CA3A6E /* UsersViewController.xib in Resources */,
 				7381B96C220C70AE00BE7FF0 /* Assets.xcassets in Resources */,
@@ -407,6 +423,7 @@
 				735CDAF5220FD8EE00CA3A6E /* UserDetailViewController.xib in Resources */,
 				735CDB01220FF75600CA3A6E /* LoadingView.xib in Resources */,
 				7381B96A220C70AD00BE7FF0 /* Main.storyboard in Resources */,
+				735CDB112211750200CA3A6E /* Image.xcassets in Resources */,
 				735CDB0F221109C800CA3A6E /* EmptyMessageView.xib in Resources */,
 				735CDAF9220FD9EB00CA3A6E /* RepositoryTableViewCell.xib in Resources */,
 			);
@@ -581,7 +598,10 @@
 				7381B965220C70AD00BE7FF0 /* AppDelegate.swift in Sources */,
 				735CDAF0220FD0D000CA3A6E /* UserTableViewCell.swift in Sources */,
 				735CDB0D221109B500CA3A6E /* EmptyMessageView.swift in Sources */,
+				735CDB1D2211C01C00CA3A6E /* MenuView.swift in Sources */,
 				735CDAEC220FCE2F00CA3A6E /* LoginViewController.swift in Sources */,
+				735CDB152211AD4600CA3A6E /* GitHubApiUser.swift in Sources */,
+				735CDB132211ACC600CA3A6E /* GitHubApiSearchUsers.swift in Sources */,
 				735CDAE8220FCE0700CA3A6E /* UsersViewController.swift in Sources */,
 				735CDB03221026DE00CA3A6E /* CommonViewController.swift in Sources */,
 				739EB0FE220D80690068C145 /* R.generated.swift in Sources */,

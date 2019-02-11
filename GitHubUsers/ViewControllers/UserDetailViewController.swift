@@ -169,6 +169,11 @@ class UserDetailViewController: CommonViewController {
             hasNextRepositories = false
             return
         }
+        let baseWidth = repositoriesTableView.frame.width
+        noForks.forEach { (repo) in
+            let height = RepositoryTableViewCell.cellHeight(repo, baseWidth: baseWidth)
+            cellHeights[repo.id] = height
+        }
         self.repositories.append(contentsOf: noForks)
         self.repositoriesTableView.reloadData()
         if self.repositories.count == 0 {

@@ -11,11 +11,16 @@ import APIKit
 
 class UsersViewController: CommonViewController {
 
+    @IBOutlet weak var menuView: MenuView!
     @IBOutlet weak var emptyMessageView: EmptyMessageView!
-    @IBOutlet weak var usersTableView: UITableView!
-    @IBOutlet weak var userSearchBar: UISearchBar!
     @IBOutlet weak var blankView: UIView!
-    
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var leftItemView: UIView!
+    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var userSearchBar: UISearchBar!
+    @IBOutlet weak var separatorLineView: UIView!
+    @IBOutlet weak var usersTableView: UITableView!
+
     fileprivate let cellHeigh: CGFloat = 64.0 + 8.0 * 2
     
     /// ユーザー一覧
@@ -67,12 +72,17 @@ class UsersViewController: CommonViewController {
         // Table View の Pan Gesture にイベントを追加する。
         usersTableView.panGestureRecognizer.addTarget(self, action: #selector(onTableViewPanGestureEvent(_:)))
 
+        menuButton.addTarget(self, action: #selector(onMenuButtonTapped(_:)), for: .touchUpInside)
+        
         userSearchBar.placeholder = "ユーザー名から検索します"
         userSearchBar.delegate = self
         
+        // 検索条件入力中に Table View を覆い操作できないようにするための View
         blankView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         blankView.alpha = 0.0
         blankView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onBlankViewTapped(_:))))
+        
+        menuView.eventDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,6 +145,10 @@ class UsersViewController: CommonViewController {
         }
     }
     
+    @objc private func onMenuButtonTapped(_ sender: Any) {
+        menuView.showMenu()
+    }
+    
     // MARK: - View Control
     
     fileprivate func showBlankView() {
@@ -145,6 +159,8 @@ class UsersViewController: CommonViewController {
         blankView.alpha = 0.0
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.blankView.alpha = 1.0
+            self?.userSearchBar.showsCancelButton = true
+            self?.view.layoutIfNeeded()
         }
     }
     
@@ -157,6 +173,8 @@ class UsersViewController: CommonViewController {
         
         UIView.animate(withDuration: 0.3, animations: { [weak self] in
             self?.blankView.alpha = 0.0
+            self?.userSearchBar.showsCancelButton = false
+            self?.view.layoutIfNeeded()
         }) { [weak self] (finished) in
             guard let parentView = self?.view, let targetView = self?.blankView else {
                 return
@@ -322,5 +340,12 @@ extension UsersViewController: UISearchBarDelegate {
         hideBlankView()
         searchKeyword = searchBar.text
         loadUsers(nextPageNo: 1)
+    }
+}
+
+extension UsersViewController: MenuViewDelegate {
+    func menuView(_ menuView: MenuView, didSelectMenu menu: MenuView.MenuItems) {
+        GitHubApiManager.shared.clearAccessToken()
+        dismiss(animated: true, completion: nil)
     }
 }
