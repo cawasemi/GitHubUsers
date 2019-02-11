@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="GitHubUsers" customModuleProvider="target">
+            <connections>
+                <outlet property="loadingView" destination="Rpe-Uf-o70" id="Uas-O9-WCm"/>
+                <outlet property="loginWebView" destination="Jdc-b5-2mV" id="gLt-iW-qou"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jdc-b5-2mV">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <wkWebViewConfiguration key="configuration">
+                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                        <wkPreferences key="preferences"/>
+                    </wkWebViewConfiguration>
+                </wkWebView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rpe-Uf-o70" customClass="LoadingView" customModule="GitHubUsers" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Rpe-Uf-o70" secondAttribute="trailing" id="97w-Td-9L9"/>
+                <constraint firstItem="Rpe-Uf-o70" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="L4Y-A9-5nQ"/>
+                <constraint firstAttribute="bottom" secondItem="Jdc-b5-2mV" secondAttribute="bottom" id="SUw-F7-Ad8"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Rpe-Uf-o70" secondAttribute="bottom" id="blR-Jq-B5N"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Jdc-b5-2mV" secondAttribute="trailing" id="nOL-7p-KLx"/>
+                <constraint firstItem="Jdc-b5-2mV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qFw-KP-2cB"/>
+                <constraint firstItem="Rpe-Uf-o70" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qyW-oI-RyT"/>
+                <constraint firstItem="Jdc-b5-2mV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="vb9-3o-q4i"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>

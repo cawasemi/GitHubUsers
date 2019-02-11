@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userTableViewCell" id="KGk-i7-Jjw" customClass="UserTableViewCell" customModule="GitHubUsers" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pBs-G7-RlI">
+                        <rect key="frame" x="12" y="12" width="19.5" height="19.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="pBs-G7-RlI" secondAttribute="height" multiplier="1:1" id="leW-db-IFh"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KoJ-tk-8xi">
+                        <rect key="frame" x="39.5" y="11.5" width="264.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="KoJ-tk-8xi" firstAttribute="leading" secondItem="pBs-G7-RlI" secondAttribute="trailing" constant="8" id="DUd-5Q-VAi"/>
+                    <constraint firstItem="pBs-G7-RlI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="KvA-25-JTj"/>
+                    <constraint firstAttribute="bottom" secondItem="pBs-G7-RlI" secondAttribute="bottom" constant="12" id="MVq-VG-X0I"/>
+                    <constraint firstItem="pBs-G7-RlI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="WSy-Fs-hBq"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="KoJ-tk-8xi" secondAttribute="trailing" id="bWA-Rh-vUL"/>
+                    <constraint firstItem="KoJ-tk-8xi" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gV6-MN-XeI"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="userIconView" destination="pBs-G7-RlI" id="OFD-d6-fVh"/>
+                <outlet property="userNameLabel" destination="KoJ-tk-8xi" id="9Ym-gi-lOo"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
