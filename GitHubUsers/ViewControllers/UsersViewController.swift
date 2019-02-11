@@ -82,7 +82,7 @@ class UsersViewController: CommonViewController {
             }
         }
 
-        isFirstAppear = true
+        isFirstAppear = false
     }
 
     /*
