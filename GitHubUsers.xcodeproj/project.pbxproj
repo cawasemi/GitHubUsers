@@ -31,19 +31,11 @@
 		7381B97A220C70AE00BE7FF0 /* GitHubUsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7381B979220C70AE00BE7FF0 /* GitHubUsersTests.swift */; };
 		7381B985220C70AF00BE7FF0 /* GitHubUsersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7381B984220C70AF00BE7FF0 /* GitHubUsersUITests.swift */; };
 		739EB0FE220D80690068C145 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739EB0FD220D80690068C145 /* R.generated.swift */; };
-		739EB116220EC27A0068C145 /* RxAtomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB108220EC27A0068C145 /* RxAtomic.framework */; };
 		739EB117220EC27A0068C145 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB109220EC27A0068C145 /* Result.framework */; };
-		739EB119220EC27A0068C145 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB10B220EC27A0068C145 /* RealmSwift.framework */; };
 		739EB11A220EC27A0068C145 /* Nuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB10C220EC27A0068C145 /* Nuke.framework */; };
-		739EB11B220EC27A0068C145 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB10D220EC27A0068C145 /* PromiseKit.framework */; };
 		739EB11C220EC27A0068C145 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB10E220EC27A0068C145 /* KeychainAccess.framework */; };
-		739EB11D220EC27A0068C145 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB10F220EC27A0068C145 /* Realm.framework */; };
-		739EB11E220EC27A0068C145 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB110220EC27A0068C145 /* RxSwift.framework */; };
-		739EB11F220EC27A0068C145 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB111220EC27A0068C145 /* RxCocoa.framework */; };
 		739EB120220EC27A0068C145 /* APIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB112220EC27A0068C145 /* APIKit.framework */; };
-		739EB121220EC27A0068C145 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB113220EC27A0068C145 /* RxBlocking.framework */; };
 		739EB122220EC27A0068C145 /* Himotoki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB114220EC27A0068C145 /* Himotoki.framework */; };
-		739EB123220EC27A0068C145 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB115220EC27A0068C145 /* Alamofire.framework */; };
 		739EB126220ECA2B0068C145 /* GitHubApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739EB125220ECA2B0068C145 /* GitHubApiManager.swift */; };
 		A18C06E58321978989884D27 /* Pods_GitHubUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148B523FEEE0382A0A6FF1C2 /* Pods_GitHubUsers.framework */; };
 		E0D08638EBE1E997AB67F10B /* Pods_GitHubUsersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA32848BBF69CC811BF740FF /* Pods_GitHubUsersTests.framework */; };
@@ -129,19 +121,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				739EB116220EC27A0068C145 /* RxAtomic.framework in Frameworks */,
 				739EB117220EC27A0068C145 /* Result.framework in Frameworks */,
-				739EB119220EC27A0068C145 /* RealmSwift.framework in Frameworks */,
 				739EB11A220EC27A0068C145 /* Nuke.framework in Frameworks */,
-				739EB11B220EC27A0068C145 /* PromiseKit.framework in Frameworks */,
 				739EB11C220EC27A0068C145 /* KeychainAccess.framework in Frameworks */,
-				739EB11D220EC27A0068C145 /* Realm.framework in Frameworks */,
-				739EB11E220EC27A0068C145 /* RxSwift.framework in Frameworks */,
-				739EB11F220EC27A0068C145 /* RxCocoa.framework in Frameworks */,
 				739EB120220EC27A0068C145 /* APIKit.framework in Frameworks */,
-				739EB121220EC27A0068C145 /* RxBlocking.framework in Frameworks */,
 				739EB122220EC27A0068C145 /* Himotoki.framework in Frameworks */,
-				739EB123220EC27A0068C145 /* Alamofire.framework in Frameworks */,
 				A18C06E58321978989884D27 /* Pods_GitHubUsers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,39 +501,21 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/RxAtomic.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxTest.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Nuke.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/KeychainAccess.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/APIKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Himotoki.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxAtomic.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Result.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxTest.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RealmSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Nuke.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PromiseKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/KeychainAccess.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Realm.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/APIKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxBlocking.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Himotoki.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
