@@ -39,21 +39,36 @@ class RepositoryTableViewCell: UITableViewCell {
         return UIFont.systemFont(ofSize: 13.0, weight: .regular)
     }
     
+    /// 外側の垂直マージン
+    class var outerVerticalMargin: CGFloat {
+        return 12.0
+    }
+    
+    /// 内側の垂直マージン
+    class var innerVerticalMargin: CGFloat {
+        return 8.0
+    }
+
     /// 表示する内容により可変になるので、セルの高さを求める。
     class func cellHeight(_ value: GitHubUserRepository, baseWidth: CGFloat) -> CGFloat {
-        let maxWidth = baseWidth - 16.0 * 2
         var height: CGFloat = 0
-        height += 12.0
-        height += nameFont.lineHeight
-        height += 8.0
-        height += languageFont.lineHeight
-        height += 8.0
+        height += ceil(nameFont.lineHeight)
+        height += ceil(languageFont.lineHeight)
         if let description = value.description {
-            height += description.requiredSize(maxWidth: maxWidth, font: descriptionFont).height
-        } else {
-            height += descriptionFont.lineHeight
+            // 説明を表示するのに必要なサイズを計算する。
+            let maxWidth = baseWidth - 16.0 * 2
+            let descriptionSize = description.requiredSize(maxWidth: maxWidth, font: descriptionFont)
+
+            // 最大３行
+            let maxDecriptionHeight = "1\n2\n3".requiredSize(maxWidth: maxWidth, font: descriptionFont).height
+            if maxDecriptionHeight < descriptionSize.height {
+                height += maxDecriptionHeight
+            } else {
+                height += descriptionSize.height
+            }
         }
-        height += 12.0
+        height += outerVerticalMargin * 2
+        height += innerVerticalMargin * 2
         return height
     }
 
