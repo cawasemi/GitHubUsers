@@ -29,7 +29,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.nib` struct is generated, and contains static references to 7 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 8 nibs.
   struct nib {
     /// Nib `EmptyMessageView`.
     static let emptyMessageView = _R.nib._EmptyMessageView()
@@ -37,6 +37,8 @@ struct R: Rswift.Validatable {
     static let loadingView = _R.nib._LoadingView()
     /// Nib `LoginViewController`.
     static let loginViewController = _R.nib._LoginViewController()
+    /// Nib `MenuView`.
+    static let menuView = _R.nib._MenuView()
     /// Nib `RepositoryTableViewCell`.
     static let repositoryTableViewCell = _R.nib._RepositoryTableViewCell()
     /// Nib `UserDetailViewController`.
@@ -62,6 +64,12 @@ struct R: Rswift.Validatable {
     @available(*, deprecated, message: "Use UINib(resource: R.nib.loginViewController) instead")
     static func loginViewController(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.loginViewController)
+    }
+    
+    /// `UINib(name: "MenuView", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.menuView) instead")
+    static func menuView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.menuView)
     }
     
     /// `UINib(name: "RepositoryTableViewCell", in: bundle)`
@@ -98,6 +106,10 @@ struct R: Rswift.Validatable {
     
     static func loginViewController(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
       return R.nib.loginViewController.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
+    }
+    
+    static func menuView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
+      return R.nib.menuView.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
     }
     
     static func repositoryTableViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> RepositoryTableViewCell? {
@@ -198,6 +210,17 @@ struct _R: Rswift.Validatable {
     struct _LoginViewController: Rswift.NibResourceType {
       let bundle = R.hostingBundle
       let name = "LoginViewController"
+      
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView
+      }
+      
+      fileprivate init() {}
+    }
+    
+    struct _MenuView: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "MenuView"
       
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> UIKit.UIView? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? UIKit.UIView

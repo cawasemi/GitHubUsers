@@ -16,6 +16,8 @@
                 <outlet property="emptyMessageView" destination="kWa-zh-8Ns" id="pht-GK-r4r"/>
                 <outlet property="headerView" destination="zx9-tV-HuW" id="X0v-xf-4E3"/>
                 <outlet property="leftItemView" destination="JDU-85-bCj" id="vf3-9z-Shg"/>
+                <outlet property="menuButton" destination="BW6-uZ-fSA" id="vYp-hl-FdL"/>
+                <outlet property="menuView" destination="q66-P3-XL7" id="wth-Pz-6GP"/>
                 <outlet property="separatorLineView" destination="Yw0-z9-vYx" id="zYu-7h-zS3"/>
                 <outlet property="userSearchBar" destination="cxz-eh-Reo" id="VDE-oL-S9C"/>
                 <outlet property="usersTableView" destination="vFt-P0-0hf" id="qX3-JG-XTG"/>
@@ -27,6 +29,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q66-P3-XL7" customClass="MenuView" customModule="GitHubUsers" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cLa-0e-sBs">
                     <rect key="frame" x="0.0" y="76" width="375" height="591"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -97,6 +103,7 @@
             <constraints>
                 <constraint firstItem="cLa-0e-sBs" firstAttribute="top" secondItem="zx9-tV-HuW" secondAttribute="bottom" id="082-TL-wKs"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="cLa-0e-sBs" secondAttribute="bottom" id="7bk-cb-sZI"/>
+                <constraint firstItem="q66-P3-XL7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="BfT-hV-PRM"/>
                 <constraint firstItem="cLa-0e-sBs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FNy-IC-h6b"/>
                 <constraint firstItem="vFt-P0-0hf" firstAttribute="top" secondItem="zx9-tV-HuW" secondAttribute="bottom" id="Hop-o9-OnW"/>
                 <constraint firstItem="vFt-P0-0hf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="IAd-pt-hqg"/>
@@ -105,7 +112,10 @@
                 <constraint firstAttribute="bottom" secondItem="vFt-P0-0hf" secondAttribute="bottom" id="T2D-IQ-nKO"/>
                 <constraint firstItem="kWa-zh-8Ns" firstAttribute="top" secondItem="vFt-P0-0hf" secondAttribute="top" id="Zh9-4K-cX5"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vFt-P0-0hf" secondAttribute="trailing" id="a79-Yq-s1n"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="q66-P3-XL7" secondAttribute="trailing" id="bbh-3m-s8z"/>
                 <constraint firstItem="zx9-tV-HuW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="d9p-ku-z1X"/>
+                <constraint firstAttribute="bottom" secondItem="q66-P3-XL7" secondAttribute="bottom" id="jd9-c0-bqf"/>
+                <constraint firstItem="q66-P3-XL7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="k4V-7g-5XH"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cLa-0e-sBs" secondAttribute="trailing" id="kqj-2o-z2w"/>
                 <constraint firstItem="kWa-zh-8Ns" firstAttribute="leading" secondItem="vFt-P0-0hf" secondAttribute="leading" id="l9j-Gb-bFe"/>
                 <constraint firstItem="kWa-zh-8Ns" firstAttribute="trailing" secondItem="vFt-P0-0hf" secondAttribute="trailing" id="s3C-GZ-355"/>
