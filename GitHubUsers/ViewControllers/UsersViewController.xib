@@ -14,6 +14,9 @@
             <connections>
                 <outlet property="blankView" destination="cLa-0e-sBs" id="DoT-Ey-1rF"/>
                 <outlet property="emptyMessageView" destination="kWa-zh-8Ns" id="pht-GK-r4r"/>
+                <outlet property="headerView" destination="zx9-tV-HuW" id="X0v-xf-4E3"/>
+                <outlet property="leftItemView" destination="JDU-85-bCj" id="vf3-9z-Shg"/>
+                <outlet property="separatorLineView" destination="Yw0-z9-vYx" id="zYu-7h-zS3"/>
                 <outlet property="userSearchBar" destination="cxz-eh-Reo" id="VDE-oL-S9C"/>
                 <outlet property="usersTableView" destination="vFt-P0-0hf" id="qX3-JG-XTG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -28,14 +31,59 @@
                     <rect key="frame" x="0.0" y="76" width="375" height="591"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
-                <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cxz-eh-Reo">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zx9-tV-HuW">
                     <rect key="frame" x="0.0" y="20" width="375" height="56"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                    <scopeButtonTitles>
-                        <string>Title</string>
-                        <string>Title</string>
-                    </scopeButtonTitles>
-                </searchBar>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JDU-85-bCj">
+                            <rect key="frame" x="0.0" y="0.0" width="46" height="56"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BW6-uZ-fSA">
+                                    <rect key="frame" x="0.0" y="0.0" width="46" height="56"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" image="menu"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="BW6-uZ-fSA" firstAttribute="top" secondItem="JDU-85-bCj" secondAttribute="top" id="0nA-Pk-HdN"/>
+                                <constraint firstAttribute="trailing" secondItem="BW6-uZ-fSA" secondAttribute="trailing" id="Fvk-dz-TG9"/>
+                                <constraint firstAttribute="bottom" secondItem="BW6-uZ-fSA" secondAttribute="bottom" id="TYS-sW-3bV"/>
+                                <constraint firstItem="BW6-uZ-fSA" firstAttribute="leading" secondItem="JDU-85-bCj" secondAttribute="leading" id="XAm-JP-ySa"/>
+                                <constraint firstAttribute="width" constant="46" id="y5F-ob-Y0y"/>
+                            </constraints>
+                        </view>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="cxz-eh-Reo">
+                            <rect key="frame" x="46" y="0.0" width="329" height="56"/>
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="barTintColor" white="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            <scopeButtonTitles>
+                                <string>Title</string>
+                                <string>Title</string>
+                            </scopeButtonTitles>
+                        </searchBar>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yw0-z9-vYx">
+                            <rect key="frame" x="0.0" y="55.5" width="375" height="0.5"/>
+                            <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="8wh-eS-4gz"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Yw0-z9-vYx" secondAttribute="trailing" id="8qF-EX-xbO"/>
+                        <constraint firstItem="cxz-eh-Reo" firstAttribute="top" secondItem="zx9-tV-HuW" secondAttribute="top" id="BTK-Q4-wKD"/>
+                        <constraint firstAttribute="bottom" secondItem="JDU-85-bCj" secondAttribute="bottom" id="DHu-Hl-2cV"/>
+                        <constraint firstAttribute="bottom" secondItem="Yw0-z9-vYx" secondAttribute="bottom" id="Exc-Iz-Kyn"/>
+                        <constraint firstAttribute="trailing" secondItem="cxz-eh-Reo" secondAttribute="trailing" id="Hom-eK-wW6"/>
+                        <constraint firstItem="JDU-85-bCj" firstAttribute="top" secondItem="zx9-tV-HuW" secondAttribute="top" id="MIz-mO-qiR"/>
+                        <constraint firstItem="JDU-85-bCj" firstAttribute="leading" secondItem="zx9-tV-HuW" secondAttribute="leading" id="N1U-Ud-Cdz"/>
+                        <constraint firstAttribute="bottom" secondItem="cxz-eh-Reo" secondAttribute="bottom" id="Vkk-tP-Dgq"/>
+                        <constraint firstItem="cxz-eh-Reo" firstAttribute="leading" secondItem="JDU-85-bCj" secondAttribute="trailing" id="xuL-Fw-G7s"/>
+                        <constraint firstItem="Yw0-z9-vYx" firstAttribute="leading" secondItem="zx9-tV-HuW" secondAttribute="leading" id="zuB-DL-MlY"/>
+                    </constraints>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vFt-P0-0hf">
                     <rect key="frame" x="0.0" y="76" width="375" height="591"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,23 +95,26 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="cxz-eh-Reo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4r0-Wf-Cky"/>
+                <constraint firstItem="cLa-0e-sBs" firstAttribute="top" secondItem="zx9-tV-HuW" secondAttribute="bottom" id="082-TL-wKs"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="cLa-0e-sBs" secondAttribute="bottom" id="7bk-cb-sZI"/>
                 <constraint firstItem="cLa-0e-sBs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FNy-IC-h6b"/>
+                <constraint firstItem="vFt-P0-0hf" firstAttribute="top" secondItem="zx9-tV-HuW" secondAttribute="bottom" id="Hop-o9-OnW"/>
                 <constraint firstItem="vFt-P0-0hf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="IAd-pt-hqg"/>
-                <constraint firstItem="cxz-eh-Reo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="MNl-0D-b8Z"/>
+                <constraint firstItem="zx9-tV-HuW" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Isc-oK-rE2"/>
                 <constraint firstItem="kWa-zh-8Ns" firstAttribute="bottom" secondItem="vFt-P0-0hf" secondAttribute="bottom" id="SCw-Xa-dll"/>
                 <constraint firstAttribute="bottom" secondItem="vFt-P0-0hf" secondAttribute="bottom" id="T2D-IQ-nKO"/>
                 <constraint firstItem="kWa-zh-8Ns" firstAttribute="top" secondItem="vFt-P0-0hf" secondAttribute="top" id="Zh9-4K-cX5"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vFt-P0-0hf" secondAttribute="trailing" id="a79-Yq-s1n"/>
-                <constraint firstItem="cxz-eh-Reo" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="aUm-4G-ysD"/>
-                <constraint firstItem="vFt-P0-0hf" firstAttribute="top" secondItem="cxz-eh-Reo" secondAttribute="bottom" id="fEX-hg-l79"/>
-                <constraint firstItem="cLa-0e-sBs" firstAttribute="top" secondItem="cxz-eh-Reo" secondAttribute="bottom" id="fmn-wk-W4K"/>
+                <constraint firstItem="zx9-tV-HuW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="d9p-ku-z1X"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cLa-0e-sBs" secondAttribute="trailing" id="kqj-2o-z2w"/>
                 <constraint firstItem="kWa-zh-8Ns" firstAttribute="leading" secondItem="vFt-P0-0hf" secondAttribute="leading" id="l9j-Gb-bFe"/>
                 <constraint firstItem="kWa-zh-8Ns" firstAttribute="trailing" secondItem="vFt-P0-0hf" secondAttribute="trailing" id="s3C-GZ-355"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zx9-tV-HuW" secondAttribute="trailing" id="wW3-cS-h8u"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
     </objects>
+    <resources>
+        <image name="menu" width="16" height="16"/>
+    </resources>
 </document>

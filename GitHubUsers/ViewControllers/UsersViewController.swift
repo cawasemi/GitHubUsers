@@ -12,10 +12,13 @@ import APIKit
 class UsersViewController: CommonViewController {
 
     @IBOutlet weak var emptyMessageView: EmptyMessageView!
-    @IBOutlet weak var usersTableView: UITableView!
-    @IBOutlet weak var userSearchBar: UISearchBar!
     @IBOutlet weak var blankView: UIView!
-    
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var leftItemView: UIView!
+    @IBOutlet weak var userSearchBar: UISearchBar!
+    @IBOutlet weak var separatorLineView: UIView!
+    @IBOutlet weak var usersTableView: UITableView!
+
     fileprivate let cellHeigh: CGFloat = 64.0 + 8.0 * 2
     
     /// ユーザー一覧
@@ -310,16 +313,19 @@ extension UsersViewController: UITableViewDelegate {
 extension UsersViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         showBlankView()
+        searchBar.showsCancelButton = true
         return true
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         hideBlankView()
+        searchBar.showsCancelButton = false
         searchBar.text = searchKeyword
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hideBlankView()
+        searchBar.showsCancelButton = false
         searchKeyword = searchBar.text
         loadUsers(nextPageNo: 1)
     }
