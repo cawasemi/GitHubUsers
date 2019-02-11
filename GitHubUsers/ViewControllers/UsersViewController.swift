@@ -18,32 +18,58 @@ class UsersViewController: CommonViewController {
     
     fileprivate let cellHeigh: CGFloat = 64.0 + 8.0 * 2
     
+    /// ユーザー一覧
     fileprivate var users: [GitHubSearchUser] = []
-    fileprivate var pageNo: Int = 1
-    private var isCallingApi: Bool = false
+    /// 検索条件に一致するユーザー数
+    ///
+    /// 現在表示しているユーザー数ではない。
     private var totalUers: Int = 0
+    /// 取得ずみのページ数
+    fileprivate var pageNo: Int = 1
+    /// API処理中を表す
+    private var isCallingApi: Bool = false
+    
+    /// 最初の画面表示を表す。
+    ///
+    /// 一度 true になったら false に戻ることはない。
+    private var isFirstAppear: Bool = false
+
+    /// ユーザー情報を更新することを表す。
+    private var willRefreshUserData: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        isFirstAppear = true
         usersTableView.register(R.nib.userTableViewCell)
         usersTableView.estimatedRowHeight = cellHeigh
+        usersTableView.rowHeight = cellHeigh
         usersTableView.dataSource = self
         usersTableView.delegate = self
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshUserData(_:)), for: .valueChanged)
+        usersTableView.refreshControl = refreshControl
+        
+        // 指が離れた時に Pull to Refresh を行いたいので、
+        // Table View の Pan Gesture にイベントを追加する。
+        usersTableView.panGestureRecognizer.addTarget(self, action: #selector(onTableViewPanGestureEvent(_:)))
+
         userSearchBar.delegate = self
         
         blankView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         blankView.alpha = 0.0
         blankView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onBlankViewTapped(_:))))
-
-        loadUsers(nextPageNo: 1)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        if isFirstAppear {
+            // 最初の画面表示であればデータを取得する。
+            loadUsers(nextPageNo: 1)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,6 +81,8 @@ class UsersViewController: CommonViewController {
                 usersTableView.deselectRow(at: indexPath, animated: true)
             }
         }
+
+        isFirstAppear = true
     }
 
     /*
@@ -75,6 +103,24 @@ class UsersViewController: CommonViewController {
     
     @objc private func onBlankViewTapped(_ sender: Any) {
         hideBlankView()
+    }
+    
+    @objc private func refreshUserData(_ sender: Any) {
+        // Pull to Refresh を予約する。
+        willRefreshUserData = true
+    }
+    
+    @objc private func onTableViewPanGestureEvent(_ sender: Any) {
+        guard let panGesture = sender as? UIPanGestureRecognizer else {
+            return
+        }
+        if panGesture.state != .ended {
+            // 終了イベント以外は処理しない。
+        } else if willRefreshUserData {
+            // 指が離れた時に　Pull to Refresh が予約されていれば処理する。
+            loadUsers(nextPageNo: 1)
+            willRefreshUserData = false
+        }
     }
     
     // MARK: - View Control
@@ -108,19 +154,8 @@ class UsersViewController: CommonViewController {
     }
     
     // MARK: - Call Api
-    
-    private func loadCurrentUser() {
-        let request = GitHubApiManager.GitHubCurrentUserRequest()
-        APIKit.Session.send(request) { [weak self] (result) in
-            switch result {
-            case .success(let response):
-                GitHubApiManager.shared.currentLogin = response.login
-            case .failure(let error):
-                self?.printError(error)
-            }
-        }
-    }
 
+    /// 検索条件に一致するユーザーを取得する。
     private func loadUsers(nextPageNo: Int) {
         if isCallingApi {
             return
@@ -142,10 +177,11 @@ class UsersViewController: CommonViewController {
             case .failure(let error):
                 self?.showApiErrorMessage(error)
             }
-            self?.isCallingApi = false
+            self?.didLoadUserData()
         }
     }
     
+    /// すべてのユーザーを取得する。
     private func loadAllUsers() {
         let request = GitHubApiManager.AllUsersRequest()
         APIKit.Session.send(request) { [weak self] (result) in
@@ -156,10 +192,17 @@ class UsersViewController: CommonViewController {
             case .failure(let error):
                 self?.showApiErrorMessage(error)
             }
-            self?.isCallingApi = false
+            self?.didLoadUserData()
         }
     }
     
+    /// ユーザー情報の取得が完了した時の処理を行う。
+    private func didLoadUserData() {
+        isCallingApi = false
+        self.usersTableView.refreshControl?.endRefreshing()
+    }
+    
+    /// ユーザー一覧テーブルを更新する。
     private func updateUsersTableView(_ users: [GitHubSearchUser], nextPageNo: Int) {
         if nextPageNo <= 1 {
             self.users.removeAll()
