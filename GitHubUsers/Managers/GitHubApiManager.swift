@@ -136,12 +136,18 @@ final class GitHubApiManager {
     struct AllUsersRequest: GitHubRequest {
         typealias Response = [GitHubSearchUser]
         
+        let since: Int64
+        
         var method: HTTPMethod {
             return .get
         }
         
         var path: String {
             return "/users"
+        }
+        
+        var parameters: Any? {
+            return ["since": since]
         }
         
         func response(from object: Any, urlResponse: HTTPURLResponse) throws -> [GitHubSearchUser] {
@@ -155,7 +161,7 @@ final class GitHubApiManager {
     /// 指定された条件に一致するユーザーを検索する。
     struct SearchUsersRequest: GitHubRequest {
         let query: String
-        let pageNo: Int
+        let pageNo: Int64
         
         // MARK: Request
         typealias Response = SearchResponse<GitHubSearchUser>
@@ -329,7 +335,6 @@ extension GitHubRequest {
         guard 200..<300 ~= urlResponse.statusCode else {
             throw GitHubError(object: object)
         }
-        
         return object
     }
 }

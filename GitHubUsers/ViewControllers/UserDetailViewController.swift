@@ -28,16 +28,22 @@ class UserDetailViewController: CommonViewController {
     @IBOutlet weak var emptyMessageView: EmptyMessageView!
     
     var userName: String?
+    var userId: Int64 = -1
     
+    /// リポジトリー一覧
     private var repositories: [GitHubUserRepository] = []
-    
-    private var totalRepositories: Int = 0
-    
+
+    /// 取得済みのページ数
     private var pageNo: Int = 0
     
+    /// API処理中を表す
     private var isCallingApi: Bool = false
-    
+
+    /// セルの高さ
     private var cellHeights: [Int64: CGFloat] = [:]
+    
+    /// 次に
+    private var hasNextRepositories: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +97,8 @@ class UserDetailViewController: CommonViewController {
         }
     }
     
+    // MARK: - API
+    
     private func loadUser() {
         guard let name = userName else {
             return
@@ -110,7 +118,7 @@ class UserDetailViewController: CommonViewController {
     }
 
     private func loadUserRepositories(nextPageNo: Int) {
-        if isCallingApi {
+        if isCallingApi || !hasNextRepositories {
             return
         }
         
@@ -123,6 +131,7 @@ class UserDetailViewController: CommonViewController {
         APIKit.Session.send(request) { [weak self] (result) in
             switch result {
             case .success(let response):
+                self?.pageNo = nextPageNo
                 self?.updateUserRepositories(response)
                 break
             case .failure(let error):
@@ -132,9 +141,12 @@ class UserDetailViewController: CommonViewController {
         }
     }
     
+    // MARK: - View Control
+    
     private func updateUserData(_ user: GitHubUser) {
         userDetailView.alpha = 1.0
         loadingView.stopLoading()
+        hasNextRepositories = true
         loadUserRepositories(nextPageNo: 1)
 
         if let urlString = user.iconUrl, let iconUrl = URL(string: urlString) {
@@ -148,7 +160,16 @@ class UserDetailViewController: CommonViewController {
     }
     
     private func updateUserRepositories(_ repositories: [GitHubUserRepository]) {
-        self.repositories = repositories.filter({!$0.isFork}).map({$0})
+        if 0 < self.repositories.count && repositories.isEmpty {
+            hasNextRepositories = false
+            return
+        }
+        let noForks = repositories.filter({!$0.isFork}).map({$0})
+        if let _ = self.repositories.last(where: {$0.id == noForks.last?.id}) {
+            hasNextRepositories = false
+            return
+        }
+        self.repositories.append(contentsOf: noForks)
         self.repositoriesTableView.reloadData()
         if self.repositories.count == 0 {
             let emptyMessage = "このユーザーはリポジトリーをまだ作成していません。"
@@ -194,6 +215,11 @@ extension UserDetailViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if hasNextRepositories
+            && 0 < repositories.count
+            && repositories.count - indexPath.row <= 3 {
+            loadUserRepositories(nextPageNo: pageNo + 1)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
