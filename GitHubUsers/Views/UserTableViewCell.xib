@@ -20,7 +20,7 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pBs-G7-RlI">
                         <rect key="frame" x="12" y="12" width="19.5" height="19.5"/>
-                        <color key="backgroundColor" white="0.69643119131455389" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="pBs-G7-RlI" secondAttribute="height" multiplier="1:1" id="leW-db-IFh"/>
                         </constraints>

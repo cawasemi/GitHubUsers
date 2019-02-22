@@ -125,6 +125,7 @@ class UsersViewController: CommonViewController {
     
     @objc private func onBlankViewTapped(_ sender: Any) {
         hideBlankView()
+        userSearchBar.text = searchKeyword
     }
     
     @objc private func refreshUserData(_ sender: Any) {
