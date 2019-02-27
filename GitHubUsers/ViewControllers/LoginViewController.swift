@@ -92,7 +92,7 @@ extension LoginViewController: WKNavigationDelegate {
             return
         }
         
-        let request = GitHubApiManager.AuthrizedRequest(code: code)
+        let request = GitHubApiAuthorizer(code)
         APIKit.Session.send(request) { [weak self] (result) in
             switch result {
             case .success(let response):

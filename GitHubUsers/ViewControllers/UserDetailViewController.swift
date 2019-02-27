@@ -31,7 +31,7 @@ class UserDetailViewController: CommonViewController {
     var userId: Int64 = -1
     
     /// リポジトリー一覧
-    private var repositories: [GitHubUserRepository] = []
+    private var repositories: [GitHubRepository] = []
 
     /// 取得済みのページ数
     private var pageNo: Int = 0
@@ -159,7 +159,7 @@ class UserDetailViewController: CommonViewController {
         followingCountLabel.text = user.following.decimalFormat
     }
     
-    private func updateUserRepositories(_ repositories: [GitHubUserRepository]) {
+    private func updateUserRepositories(_ repositories: [GitHubRepository]) {
         if 0 < self.repositories.count && repositories.isEmpty {
             hasNextRepositories = false
             return

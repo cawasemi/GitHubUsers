@@ -50,7 +50,7 @@ class RepositoryTableViewCell: UITableViewCell {
     }
 
     /// 表示する内容により可変になるので、セルの高さを求める。
-    class func cellHeight(_ value: GitHubUserRepository, baseWidth: CGFloat) -> CGFloat {
+    class func cellHeight(_ value: GitHubRepository, baseWidth: CGFloat) -> CGFloat {
         var height: CGFloat = 0
         height += ceil(nameFont.lineHeight)
         height += ceil(languageFont.lineHeight)
@@ -105,7 +105,7 @@ class RepositoryTableViewCell: UITableViewCell {
         repositoryDescriptionLabel.text = nil
     }
     
-    func prepareRepositoryData(_ value: GitHubUserRepository) {
+    func prepareRepositoryData(_ value: GitHubRepository) {
         repositoryNameLabel.text = value.name
         if let language = value.language, !language.isEmpty {
             languageLabel.text = language
