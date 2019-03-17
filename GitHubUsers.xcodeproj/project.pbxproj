@@ -49,6 +49,8 @@
 		73FB9C30223DD8210050A4BA /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739EB10D220EC27A0068C145 /* PromiseKit.framework */; };
 		73FB9C34223E701D0050A4BA /* GitHubSearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C33223E701D0050A4BA /* GitHubSearchUser.swift */; };
 		73FB9C36223E71A80050A4BA /* GitHubSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C35223E71A80050A4BA /* GitHubSearchResponse.swift */; };
+		73FB9C38223E78100050A4BA /* GitHubApiUserRespositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C37223E78100050A4BA /* GitHubApiUserRespositories.swift */; };
+		73FB9C3A223E7E870050A4BA /* GitHubApiRateLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FB9C39223E7E870050A4BA /* GitHubApiRateLimit.swift */; };
 		A18C06E58321978989884D27 /* Pods_GitHubUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148B523FEEE0382A0A6FF1C2 /* Pods_GitHubUsers.framework */; };
 		E0D08638EBE1E997AB67F10B /* Pods_GitHubUsersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA32848BBF69CC811BF740FF /* Pods_GitHubUsersTests.framework */; };
 		FC8AD73129544ACED1159393 /* Pods_GitHubUsersUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33C86F207BB2F3050593F9F0 /* Pods_GitHubUsersUITests.framework */; };
@@ -130,6 +132,8 @@
 		73CF83BC22218A4E00EB2B3E /* GitHubRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubRepository.swift; sourceTree = "<group>"; };
 		73FB9C33223E701D0050A4BA /* GitHubSearchUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchUser.swift; sourceTree = "<group>"; };
 		73FB9C35223E71A80050A4BA /* GitHubSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchResponse.swift; sourceTree = "<group>"; };
+		73FB9C37223E78100050A4BA /* GitHubApiUserRespositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubApiUserRespositories.swift; sourceTree = "<group>"; };
+		73FB9C39223E7E870050A4BA /* GitHubApiRateLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubApiRateLimit.swift; sourceTree = "<group>"; };
 		8A13AB0F28E678EE068AE387 /* Pods-GitHubUsersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUsersTests.debug.xcconfig"; path = "Target Support Files/Pods-GitHubUsersTests/Pods-GitHubUsersTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B0ABC90F37642887B11DA5EE /* Pods-GitHubUsersUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUsersUITests.debug.xcconfig"; path = "Target Support Files/Pods-GitHubUsersUITests/Pods-GitHubUsersUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DA32848BBF69CC811BF740FF /* Pods_GitHubUsersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubUsersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -275,11 +279,13 @@
 		739EB124220EC9CF0068C145 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				7302560D22218CD300E1B4F5 /* GitHubApiRequest.swift */,
 				7302560F22218D4F00E1B4F5 /* GitHubApiAuthorizer.swift */,
-				735CDB122211ACC600CA3A6E /* GitHubApiSearchUsers.swift */,
 				739EB125220ECA2B0068C145 /* GitHubApiManager.swift */,
+				73FB9C39223E7E870050A4BA /* GitHubApiRateLimit.swift */,
+				7302560D22218CD300E1B4F5 /* GitHubApiRequest.swift */,
+				735CDB122211ACC600CA3A6E /* GitHubApiSearchUsers.swift */,
 				735CDB142211AD4600CA3A6E /* GitHubApiUser.swift */,
+				73FB9C37223E78100050A4BA /* GitHubApiUserRespositories.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				7302561022218D4F00E1B4F5 /* GitHubApiAuthorizer.swift in Sources */,
 				735CDAF4220FD8EE00CA3A6E /* UserDetailViewController.swift in Sources */,
 				735CDAF8220FD9EB00CA3A6E /* RepositoryTableViewCell.swift in Sources */,
+				73FB9C38223E78100050A4BA /* GitHubApiUserRespositories.swift in Sources */,
 				73FB9C34223E701D0050A4BA /* GitHubSearchUser.swift in Sources */,
 				735CDAFF220FF72B00CA3A6E /* LoadingView.swift in Sources */,
 				7302560E22218CD300E1B4F5 /* GitHubApiRequest.swift in Sources */,
@@ -637,6 +644,7 @@
 				73CF83BB22218A0300EB2B3E /* GitHubUser.swift in Sources */,
 				73CF83BD22218A4E00EB2B3E /* GitHubRepository.swift in Sources */,
 				735CDB152211AD4600CA3A6E /* GitHubApiUser.swift in Sources */,
+				73FB9C3A223E7E870050A4BA /* GitHubApiRateLimit.swift in Sources */,
 				735CDB132211ACC600CA3A6E /* GitHubApiSearchUsers.swift in Sources */,
 				735CDAE8220FCE0700CA3A6E /* UsersViewController.swift in Sources */,
 				735CDB03221026DE00CA3A6E /* CommonViewController.swift in Sources */,

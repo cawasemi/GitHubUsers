@@ -10,6 +10,7 @@ import APIKit
 import Himotoki
 import PromiseKit
 
+/// アクセストークンを取得する。
 class GitHubApiAuthorizer: GitHubApiRequest {
     typealias Response = GitHubAuthorized
     

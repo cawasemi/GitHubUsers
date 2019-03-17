@@ -27,9 +27,9 @@ class UsersViewController: CommonViewController {
     /// ユーザー一覧
     fileprivate var users: [GitHubSearchUser] = []
     
-//    private lazy var allUsersRequest: GitHubApiAllhUsers = {
-//        return GitHubApiAllhUsers()
-//    }()
+    private lazy var allUsersRequest: GitHubApiAllhUsers = {
+        return GitHubApiAllhUsers()
+    }()
     
     private lazy var searchUsersRequest: GitHubApiSearchUsers = {
         return GitHubApiSearchUsers()
@@ -227,13 +227,13 @@ class UsersViewController: CommonViewController {
         }
 
         isAllUsers = false
-        return GitHubApiSearchUsers().next(nextPageNo, query: keyword)
+        return searchUsersRequest.next(nextPageNo, query: keyword)
     }
     
     /// すべてのユーザーを取得する。
     private func loadAllUsers(nextPageNo: Int64) -> Promise<GitHubUsers> {
         isAllUsers = true
-        return GitHubApiAllhUsers(nextPageNo).next()
+        return allUsersRequest.next(nextPageNo)
     }
     
     /// ユーザー情報の取得が完了した時の処理を行う。

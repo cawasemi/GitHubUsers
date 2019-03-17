@@ -14,6 +14,7 @@ protocol GitHubApiRequest: APIKit.Request {
     
 }
 
+/// 共通のパラメーターを定義する。
 extension GitHubApiRequest {
     var baseURL: URL {
         return URL(string: "https://api.github.com")!
@@ -28,6 +29,7 @@ extension GitHubApiRequest {
     }
 }
 
+/// 共通のエラー処理
 extension GitHubApiRequest {    
     func intercept(object: Any, urlResponse: HTTPURLResponse) throws -> Any {
         guard 200..<300 ~= urlResponse.statusCode else {

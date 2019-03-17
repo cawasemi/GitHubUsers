@@ -30,6 +30,8 @@ class UserDetailViewController: CommonViewController {
     var userName: String?
     var userId: Int64 = -1
     
+    private var userRepositoriesReqest: GitHubApiUserRepositories? = nil
+    
     /// リポジトリー一覧
     private var repositories: [GitHubRepository] = []
 
@@ -106,14 +108,10 @@ class UserDetailViewController: CommonViewController {
         
         loadingView.startLoading()
 
-        let request = GitHubApiManager.GitHubUserRequest(login: name)
-        APIKit.Session.send(request) { [weak self] (result) in
-            switch result {
-            case .success(let response):
-                self?.updateUserData(response)
-            case .failure(let error):
-                self?.showApiErrorMessage(error)
-            }
+        GitHubApiUser().getUser(name).done { [weak self] (user) in
+            self?.updateUserData(user)
+        }.catch { [weak self] (error) in
+            self?.showApiErrorMessage(error)
         }
     }
 
@@ -127,17 +125,20 @@ class UserDetailViewController: CommonViewController {
         }
 
         isCallingApi = true
-        let request = GitHubApiManager.GitHubUserRepositoriesRequest(login: login, pageNo: nextPageNo)
-        APIKit.Session.send(request) { [weak self] (result) in
-            switch result {
-            case .success(let response):
-                self?.pageNo = nextPageNo
-                self?.updateUserRepositories(response)
-                break
-            case .failure(let error):
-                self?.printError(error)
-            }
+        let request: GitHubApiUserRepositories
+        if let work = userRepositoriesReqest {
+            request = work
+        } else {
+            request = GitHubApiUserRepositories(login)
+            userRepositoriesReqest = request
+        }
+        request.next(nextPageNo).done { [weak self] (repositories) in
+            self?.pageNo = nextPageNo
+            self?.updateUserRepositories(repositories)
+        }.ensure { [weak self] in
             self?.isCallingApi = false
+        }.catch { (error) in
+            // --
         }
     }
     
@@ -182,8 +183,10 @@ class UserDetailViewController: CommonViewController {
         }
     }
 
-    private func showApiErrorMessage(_ error: SessionTaskError) {
-        printError(error)
+    private func showApiErrorMessage(_ error: Error) {
+        if let error = error as? SessionTaskError {
+            printError(error)
+        }
         let errorMessage = "ユーザーの情報が取得できませんでした。\n時間をおいて改めて操作をお願いします。"
         showErrorMessage(errorMessage) { [weak self] in
             self?.navigationController?.popViewController(animated: true)

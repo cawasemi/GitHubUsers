@@ -64,11 +64,12 @@ class GitHubApiAllhUsers: GitHubApiRequest {
     
     private var pageIndex: Int64
     
-    init(_ pageIndex: Int64) {
-        self.pageIndex = pageIndex
+    init() {
+        self.pageIndex = 0
     }
     
-    func next() -> Promise<GitHubUsers> {
+    func next(_ pageIndex: Int64) -> Promise<GitHubUsers> {
+        self.pageIndex = pageIndex
         return Promise<GitHubUsers> { resolver in
             APIKit.Session.send(self) { [weak self] (result) in
                 switch result {

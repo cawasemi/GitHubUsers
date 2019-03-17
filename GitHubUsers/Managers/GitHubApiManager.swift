@@ -7,29 +7,7 @@
 //
 
 import UIKit
-import APIKit
 import KeychainAccess
-import Himotoki
-
-protocol GitHubRequest: Request {
-    
-}
-
-extension GitHubRequest {
-    var baseURL: URL {
-        return URL(string: "https://api.github.com")!
-    }
-    
-    var headerFields: [String : String] {
-        return ["Authorization": GitHubApiManager.shared.accessToken]
-    }
-}
-
-extension GitHubRequest where Response: Himotoki.Decodable {
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        return try Response.decodeValue(object)
-    }
-}
 
 final class GitHubApiManager {
     static let shared = GitHubApiManager()
@@ -87,79 +65,5 @@ final class GitHubApiManager {
         } catch let error {
             dump(error)
         }
-    }
-    
-    // Mark: API Request
-
-    struct RateLimitRequest: GitHubRequest {
-        typealias Response = RateLimit
-        
-        var method: HTTPMethod {
-            return .get
-        }
-        
-        var path: String {
-            return "/rate_limit"
-        }
-    }
-    
-    /// アクセストークン取得リクエスト
-    ///
-    /// Web ページを認証で取得したコードをもとにアクセストークンを取得する。
-    struct AuthrizedRequest: GitHubRequest {
-        typealias Response = GitHubAuthorized
-        
-        var code: String
-        
-        var method: HTTPMethod {
-            return .post
-        }
-        
-        var baseURL: URL {
-            return URL(string: "https://github.com")!
-        }
-        
-        var path: String {
-            return "/login/oauth/access_token"
-        }
-        
-        var headerFields: [String : String] {
-            return ["Accept": "application/json"]
-        }
-        
-        var parameters: Any? {
-            return ["client_id": "c82b3a07dbc4915a92d1", "client_secret": "c2477409c6951cf55310a096ae2b3dc9bdfd811f", "code": code]
-        }
-    }
-}
-
-struct RateLimit: Himotoki.Decodable {
-    let limit: Int
-    let remaining: Int
-    
-    static func decode(_ e: Extractor) throws -> RateLimit {
-        return try RateLimit(
-            limit: e.value(["rate", "limit"]),
-            remaining: e.value(["rate", "remaining"]))
-    }
-}
-
-struct SearchResponse<Item: Himotoki.Decodable>: Himotoki.Decodable {
-    let items: [Item]
-    let totalCount: Int
-    
-    static func decode(_ e: Extractor) throws -> SearchResponse {
-        return try SearchResponse(
-            items: e.array("items"),
-            totalCount: e.value("total_count"))
-    }
-}
-
-extension GitHubRequest {
-    func intercept(object: Any, urlResponse: HTTPURLResponse) throws -> Any {
-        guard 200..<300 ~= urlResponse.statusCode else {
-            throw GitHubError(object: object)
-        }
-        return object
     }
 }
