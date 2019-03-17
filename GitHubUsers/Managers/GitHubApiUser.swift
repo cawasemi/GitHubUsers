@@ -9,6 +9,7 @@
 import Foundation
 import APIKit
 import Himotoki
+import PromiseKit
 
 extension GitHubApiManager {
     /// 現在ログインしているユーザーの情報を取得する。
@@ -70,7 +71,37 @@ extension GitHubApiManager {
 }
 
 class GitHubApiUser: GitHubApiRequest {
+    typealias Response = GitHubUser
+    
     var method: HTTPMethod {
         return .get
     }
-}
+    
+    var path: String {
+        let encoded: String = login.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed) ?? ""
+        return String(format: "/users/%@/repos", encoded)
+    }
+    
+    private var login: String
+    
+    init() {
+        self.login = ""
+    }
+    
+    func getUser(_ login: String) -> Promise<GitHubUser> {
+        self.login = login
+        return Promise<GitHubUser> { (resolver) in
+            APIKit.Session.send(self) { [weak self] (result) in
+                switch result {
+                case .success(let response):
+                    resolver.fulfill(response)
+                    break
+                case .failure(let error):
+                    self?.printError(error)
+                    resolver.reject(error)
+                    break
+                }
+            }
+        }
+        // ---
+    }}

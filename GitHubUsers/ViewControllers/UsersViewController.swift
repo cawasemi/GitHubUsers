@@ -8,6 +8,7 @@
 
 import UIKit
 import APIKit
+import PromiseKit
 
 class UsersViewController: CommonViewController {
 
@@ -24,12 +25,20 @@ class UsersViewController: CommonViewController {
     fileprivate let cellHeigh: CGFloat = 64.0 + 8.0 * 2
     
     /// ユーザー一覧
-    fileprivate var users: [GitHubSearchUser] = []
+    fileprivate var users: [GitHubUser] = []
+    
+    private lazy var allUsersRequest: GitHubApiAllhUsers = {
+        return GitHubApiAllhUsers()
+    }()
+    
+    private lazy var searchUsersRequest: GitHubApiSearchUsers = {
+        return GitHubApiSearchUsers()
+    }()
 
     /// 検索条件に一致するユーザー数
     ///
     /// 現在表示しているユーザー数ではない。
-    private var totalUers: Int = 0
+    private var totalUers: Int64 = 0
 
     /// 取得ずみのページ数
     fileprivate var pageNo: Int64 = 1
@@ -90,7 +99,7 @@ class UsersViewController: CommonViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         if isFirstAppear {
             // 最初の画面表示であればデータを取得する。
-            loadUsers(nextPageNo: 1)
+            willLoadUsers(nextPageNo: 1)
         }
     }
     
@@ -187,46 +196,39 @@ class UsersViewController: CommonViewController {
     // MARK: - Call Api
 
     /// 検索条件に一致するユーザーを取得する。
-    private func loadUsers(nextPageNo: Int64) {
+    private func willLoadUsers(nextPageNo: Int64) {
         if isCallingApi {
             return
         }
         isCallingApi = true
         emptyMessageView.hideMessage()
-        guard let keyword = userSearchBar.text?.trimmingCharacters(in: .whitespaces), !keyword.isEmpty else {
-            // キーワードが入力されていない場合は、すべてのユーザーを検索する。
-            loadAllUsers(nextPageNo: nextPageNo)
-            return
-        }
-
-        isAllUsers = false
-        let request = GitHubApiManager.SearchUsersRequest(query: keyword, pageNo: nextPageNo)
-        APIKit.Session.send(request) { [weak self] (result) in
-            switch result {
-            case .success(let response):
-                self?.totalUers = response.totalCount
-                self?.updateUsersTableView(response.items, nextPageNo: nextPageNo)
-            case .failure(let error):
-                self?.showApiErrorMessage(error)
-            }
+        
+        loadUsers(nextPageNo: nextPageNo).done { [weak self] (users) in
+            self?.totalUers = users.totalCount
+            self?.updateUsersTableView(users.items, nextPageNo: nextPageNo)
+        }.ensure { [weak self] in
             self?.didLoadUserData()
+        }.catch { [weak self] (error) in
+            if let wError = error as? SessionTaskError {
+                self?.showApiErrorMessage(wError)
+            }
         }
     }
     
-    /// すべてのユーザーを取得する。
-    private func loadAllUsers(nextPageNo: Int64) {
-        isAllUsers = true
-        let request = GitHubApiManager.AllUsersRequest(since: nextPageNo)
-        APIKit.Session.send(request) { [weak self] (result) in
-            switch result {
-            case .success(let response):
-                self?.totalUers = -1
-                self?.updateUsersTableView(response, nextPageNo: nextPageNo)
-            case .failure(let error):
-                self?.showApiErrorMessage(error)
-            }
-            self?.didLoadUserData()
+    private func loadUsers(nextPageNo: Int64) -> Promise<GitHubUsers<GitHubUser>> {
+        guard let keyword = userSearchBar.text?.trimmingCharacters(in: .whitespaces), !keyword.isEmpty else {
+            // キーワードが入力されていない場合は、すべてのユーザーを検索する。
+            return loadAllUsers(nextPageNo: nextPageNo)
         }
+
+        isAllUsers = false
+        return GitHubApiSearchUsers().next(nextPageNo, query: keyword)
+    }
+    
+    /// すべてのユーザーを取得する。
+    private func loadAllUsers(nextPageNo: Int64) -> Promise<GitHubUsers<GitHubUser>> {
+        isAllUsers = true
+        return allUsersRequest.next(nextPageNo)
     }
     
     /// ユーザー情報の取得が完了した時の処理を行う。
@@ -239,7 +241,7 @@ class UsersViewController: CommonViewController {
     }
     
     /// ユーザー一覧テーブルを更新する。
-    private func updateUsersTableView(_ users: [GitHubSearchUser], nextPageNo: Int64) {
+    private func updateUsersTableView(_ users: [GitHubUser], nextPageNo: Int64) {
         if nextPageNo <= 1 {
             self.users.removeAll()
             usersTableView.setContentOffset(.zero, animated: false)
@@ -247,7 +249,7 @@ class UsersViewController: CommonViewController {
         if 1 < nextPageNo && users.isEmpty {
             // 最初のページ以外で検索結果が０件の場合はこれ以上取得できるものがないので
             // これ以上検索させないために合計ユーザー数を表示数以上にする。
-            totalUers = self.users.count + 1
+            totalUers = Int64(self.users.count) + 1
             return
         } else if isAllUsers {
             // すべてのユーザーを表示している場合は次のユーザーIDを設定する。

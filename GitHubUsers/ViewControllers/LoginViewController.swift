@@ -8,7 +8,7 @@
 
 import UIKit
 import WebKit
-import APIKit
+import PromiseKit
 
 class LoginViewController: CommonViewController {
     
@@ -92,17 +92,11 @@ extension LoginViewController: WKNavigationDelegate {
             return
         }
         
-        let request = GitHubApiAuthorizer(code)
-        APIKit.Session.send(request) { [weak self] (result) in
-            switch result {
-            case .success(let response):
-                GitHubApiManager.shared.accessToken = response.accessToken
-                completion()
-            case .failure(let error):
-                self?.printError(error)
-                let errorMessage = "認証に失敗しました。\n時間をおいて改めて操作をお願いします。"
-                self?.showErrorMessage(errorMessage, completion: completion)
-            }
+        GitHubApiAuthorizer(code).authorizer().done { (_) in
+            completion()
+        }.catch { [weak self] (_) in
+            let errorMessage = "認証に失敗しました。\n時間をおいて改めて操作をお願いします。"
+            self?.showErrorMessage(errorMessage, completion: completion)
         }
     }
 }

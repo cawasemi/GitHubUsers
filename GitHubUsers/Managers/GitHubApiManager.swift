@@ -133,14 +133,6 @@ final class GitHubApiManager {
     }
 }
 
-struct GitHubAuthorized: Himotoki.Decodable {
-    let accessToken: String
-    
-    static func decode(_ e: Extractor) throws -> GitHubAuthorized {
-        return try GitHubAuthorized(accessToken: e.value("access_token"))
-    }
-}
-
 struct RateLimit: Himotoki.Decodable {
     let limit: Int
     let remaining: Int
@@ -160,16 +152,6 @@ struct SearchResponse<Item: Himotoki.Decodable>: Himotoki.Decodable {
         return try SearchResponse(
             items: e.array("items"),
             totalCount: e.value("total_count"))
-    }
-}
-
-// https://developer.github.com/v3/#client-errors
-struct GitHubError: Error {
-    let message: String
-    
-    init(object: Any) {
-        let dictionary = object as? [String: Any]
-        message = dictionary?["message"] as? String ?? "Unknown error occurred"
     }
 }
 

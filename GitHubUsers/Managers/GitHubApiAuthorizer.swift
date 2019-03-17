@@ -8,6 +8,7 @@
 
 import APIKit
 import Himotoki
+import PromiseKit
 
 class GitHubApiAuthorizer: GitHubApiRequest {
     typealias Response = GitHubAuthorized
@@ -32,9 +33,36 @@ class GitHubApiAuthorizer: GitHubApiRequest {
         return ["client_id": "c82b3a07dbc4915a92d1", "client_secret": "c2477409c6951cf55310a096ae2b3dc9bdfd811f", "code": code]
     }
 
-    var code: String
-    
+    private var code: String
     init(_ code: String) {
         self.code = code
+    }
+    
+    func authorizer() -> Promise<String> {
+        return Promise<String> { resolver in
+            APIKit.Session.send(self) { (result) in
+                switch result {
+                case .success(let response):
+                    GitHubApiManager.shared.accessToken = response.accessToken
+                    resolver.fulfill(response.accessToken)
+                case .failure(let error):
+                    resolver.reject(error)
+                }
+            }
+        }
+        // ---
+    }
+}
+
+struct GitHubAuthorized: Himotoki.Decodable {
+    let accessToken: String
+    let scopes: String
+    let tokenType: String
+    
+    static func decode(_ e: Extractor) throws -> GitHubAuthorized {
+        return try GitHubAuthorized(
+            accessToken: e.value("access_token"),
+            scopes: e.value("scope"),
+            tokenType: e.value("token_type"))
     }
 }
