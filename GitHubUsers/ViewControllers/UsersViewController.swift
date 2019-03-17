@@ -25,11 +25,11 @@ class UsersViewController: CommonViewController {
     fileprivate let cellHeigh: CGFloat = 64.0 + 8.0 * 2
     
     /// ユーザー一覧
-    fileprivate var users: [GitHubUser] = []
+    fileprivate var users: [GitHubSearchUser] = []
     
-    private lazy var allUsersRequest: GitHubApiAllhUsers = {
-        return GitHubApiAllhUsers()
-    }()
+//    private lazy var allUsersRequest: GitHubApiAllhUsers = {
+//        return GitHubApiAllhUsers()
+//    }()
     
     private lazy var searchUsersRequest: GitHubApiSearchUsers = {
         return GitHubApiSearchUsers()
@@ -150,7 +150,7 @@ class UsersViewController: CommonViewController {
             // 終了イベント以外は処理しない。
         } else if willRefreshUserData {
             // 指が離れた時に　Pull to Refresh が予約されていれば処理する。
-            loadUsers(nextPageNo: 1)
+            willLoadUsers(nextPageNo: 1)
             willRefreshUserData = false
         }
     }
@@ -202,6 +202,11 @@ class UsersViewController: CommonViewController {
         }
         isCallingApi = true
         emptyMessageView.hideMessage()
+
+        if nextPageNo <= 1 {
+            self.users.removeAll()
+            self.usersTableView.reloadData()
+        }
         
         loadUsers(nextPageNo: nextPageNo).done { [weak self] (users) in
             self?.totalUers = users.totalCount
@@ -215,7 +220,7 @@ class UsersViewController: CommonViewController {
         }
     }
     
-    private func loadUsers(nextPageNo: Int64) -> Promise<GitHubUsers<GitHubUser>> {
+    private func loadUsers(nextPageNo: Int64) -> Promise<GitHubUsers> {
         guard let keyword = userSearchBar.text?.trimmingCharacters(in: .whitespaces), !keyword.isEmpty else {
             // キーワードが入力されていない場合は、すべてのユーザーを検索する。
             return loadAllUsers(nextPageNo: nextPageNo)
@@ -226,9 +231,9 @@ class UsersViewController: CommonViewController {
     }
     
     /// すべてのユーザーを取得する。
-    private func loadAllUsers(nextPageNo: Int64) -> Promise<GitHubUsers<GitHubUser>> {
+    private func loadAllUsers(nextPageNo: Int64) -> Promise<GitHubUsers> {
         isAllUsers = true
-        return allUsersRequest.next(nextPageNo)
+        return GitHubApiAllhUsers(nextPageNo).next()
     }
     
     /// ユーザー情報の取得が完了した時の処理を行う。
@@ -241,7 +246,7 @@ class UsersViewController: CommonViewController {
     }
     
     /// ユーザー一覧テーブルを更新する。
-    private func updateUsersTableView(_ users: [GitHubUser], nextPageNo: Int64) {
+    private func updateUsersTableView(_ users: [GitHubSearchUser], nextPageNo: Int64) {
         if nextPageNo <= 1 {
             self.users.removeAll()
             usersTableView.setContentOffset(.zero, animated: false)
@@ -319,7 +324,7 @@ extension UsersViewController: UITableViewDelegate {
                 return
             }
             // 表示されていないデータが一定数以下になったら、次のページを読みに行く。
-            loadUsers(nextPageNo: pageNo + 1)
+            willLoadUsers(nextPageNo: pageNo + 1)
         }
     }
     
@@ -342,7 +347,7 @@ extension UsersViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hideBlankView()
         searchKeyword = searchBar.text
-        loadUsers(nextPageNo: 1)
+        willLoadUsers(nextPageNo: 1)
     }
 }
 

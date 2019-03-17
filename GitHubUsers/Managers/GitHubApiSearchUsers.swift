@@ -11,8 +11,10 @@ import APIKit
 import Himotoki
 import PromiseKit
 
+typealias GitHubUsers = GitHubSearchResponse<GitHubSearchUser>
+
 class GitHubApiSearchUsers: GitHubApiRequest {
-    typealias Response = GitHubUsers<GitHubUser>
+    typealias Response = GitHubUsers
     
     var path: String {
         return "/search/users"
@@ -50,7 +52,7 @@ class GitHubApiSearchUsers: GitHubApiRequest {
 }
 
 class GitHubApiAllhUsers: GitHubApiRequest {
-    typealias Response = [GitHubUser]
+    typealias Response = [GitHubSearchUser]
     
     var path: String {
         return "/users"
@@ -62,18 +64,16 @@ class GitHubApiAllhUsers: GitHubApiRequest {
     
     private var pageIndex: Int64
     
-    init() {
-        self.pageIndex = 0
+    init(_ pageIndex: Int64) {
+        self.pageIndex = pageIndex
     }
     
-    func next(_ pageIndex: Int64) -> Promise<GitHubUsers<GitHubUser>> {
-        self.pageIndex = pageIndex
+    func next() -> Promise<GitHubUsers> {
         return Promise<GitHubUsers> { resolver in
             APIKit.Session.send(self) { [weak self] (result) in
                 switch result {
                 case .success(let response):
-//                    let users = GitHubUsers<GitHubUser>(incompleteResults: false, items: respnse, totalCount: -1)
-                    let users = GitHubUsers.init(incompleteResults: false, items: response, totalCount: -1)
+                    let users = GitHubUsers( items: response, incompleteResults: false, totalCount: -1)
                     resolver.fulfill(users)
                     break
                 case .failure(let error):
@@ -85,7 +85,7 @@ class GitHubApiAllhUsers: GitHubApiRequest {
         }
     }
     
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> [GitHubUser] {
+    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
         return try decodeArray(object)
     }
 }
